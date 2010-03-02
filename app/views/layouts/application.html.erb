@@ -27,7 +27,7 @@
   
   <div class="span-24" id="header">
     <div class="span-20">
-      <div class="span-3 nav-tab"> <a href="">Home</a> </div>
+      <div class="span-3 nav-tab"> <%= link_to "Home", root_url %> </div>
       <% if !current_user %>
         <div class="span-3 nav-tab" class="nav-tab"> <%= link_to "Sign Up", new_account_path %> </div>
       <% else %>
@@ -40,7 +40,7 @@
     <div class="span-4 last">
       <% if !current_user %>
         <%= link_to "Register", new_account_path %> |
-        <%= link_to "Log In", new_user_session_path %>
+        <%= link_to "Sign In", new_user_session_path %>
       <% else %>
         <%= link_to "My Account", account_path %> |
         <%= link_to "Logout", user_session_path, :method => :delete %>

@@ -1,0 +1,27 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  avg_rating: 1.5
+  num_ratings: 1
+  ranked_value: 1.5
+  deleted: false
+  play_count: 1
+  removed: false
+  platform: MyString
+  file: MyString
+  description: MyText
+  title: MyString
+  is_adult: false
+
+two:
+  avg_rating: 1.5
+  num_ratings: 1
+  ranked_value: 1.5
+  deleted: false
+  play_count: 1
+  removed: false
+  platform: MyString
+  file: MyString
+  description: MyText
+  title: MyString
+  is_adult: false

@@ -136,3 +136,68 @@ GameSearchEngineQuery
     Body
     Date
     IP
+
+
+
+
+
+
+
+######################################################################
+Stage 1 Detailed Schema
+######################################################################
+
+// :string, :text, :integer, :decimal, :float, :date, :boolean ...
+
+Game
+    User (FK)
+    Thumbnail (FK) (S3 Object ID - user selected default)
+    
+    avg_rating:float
+    num_ratings:integer
+    ranked_value:float
+    deleted:boolean
+    play_count:integer
+    removed:boolean
+    platform:string
+    file:string
+    description:text
+    title:string
+    is_adult:boolean
+    
+    model game avg_rating:float num_ratings:integer ranked_value:float deleted:boolean play_count:integer removed:boolean platform:string file:string description:text title:string is_adult:boolean
+    
+
+Thumbnail
+    Game (FK)
+    
+    path:string
+    width:integer
+    height:integer
+    
+    model thumbnail path:string width:integer height:integer
+
+User // JUST _ADD_ ATTRIBUTES
+    photo:string
+    name:string
+    about:text
+    expiration:date
+    
+    // by hand
+
+Rating
+    Game (FK)
+    User (FK)
+    
+    rating:integer
+    
+    model rating rating:integer
+
+Feedback
+    User (FK) (optional)
+    
+    email:string
+    body:text
+    submission_url:string
+    
+    model feedback email:string body:text submission_url:string
