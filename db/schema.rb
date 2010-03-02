@@ -9,11 +9,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100302130202) do
+ActiveRecord::Schema.define(:version => 20100302135206) do
 
   create_table "feedbacks", :force => true do |t|
     t.string   "email"
-    t.text     "body"
+    t.string   "body",           :null => false
     t.string   "submission_url"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -21,17 +21,17 @@ ActiveRecord::Schema.define(:version => 20100302130202) do
   end
 
   create_table "games", :force => true do |t|
-    t.float    "avg_rating"
-    t.integer  "num_ratings"
-    t.float    "ranked_value"
-    t.boolean  "deleted"
-    t.integer  "play_count"
-    t.boolean  "removed"
-    t.string   "platform"
+    t.float    "avg_rating",   :default => 0.0
+    t.integer  "num_ratings",  :default => 0
+    t.float    "ranked_value", :default => 0.0
+    t.boolean  "deleted",      :default => false
+    t.integer  "play_count",   :default => 0
+    t.boolean  "removed",      :default => false
+    t.string   "platform",                        :null => false
     t.string   "file"
     t.text     "description"
     t.string   "title"
-    t.boolean  "is_adult"
+    t.boolean  "is_adult",     :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20100302130202) do
   end
 
   create_table "ratings", :force => true do |t|
-    t.integer  "rating"
+    t.integer  "rating",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
@@ -47,9 +47,9 @@ ActiveRecord::Schema.define(:version => 20100302130202) do
   end
 
   create_table "thumbnails", :force => true do |t|
-    t.string   "path"
-    t.integer  "width"
-    t.integer  "height"
+    t.string   "path",       :null => false
+    t.integer  "width",      :null => false
+    t.integer  "height",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "game_id"
