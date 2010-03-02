@@ -1,0 +1,91 @@
+/* --------------------------------------------------------
+  GENERIC GLOBALS
+-------------------------------------------------------- */
+
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* --------------------------------------------------------
+  SITE-SPECIFIC GLOBALS
+-------------------------------------------------------- */
+
+#global-container
+{
+  margin-top: 0;
+  padding-top: 10px;
+}
+
+/* Nav */
+
+#header
+{
+  margin-bottom: 2em;
+  border-top: 1px solid #ccccff;
+  border-bottom: 1px solid #ccccff;
+  padding: 5px 0;
+}
+
+#header .nav-tab
+{
+  text-align: left;
+  margin-top: 0;
+}
+
+#header .nav-tab a
+{
+  color: #555;
+  font-size: 1.3em;
+}
+
+#header .nav-tab a.selected
+{
+  color: black;
+}
+
+
+/* Utils */
+
+#header .util .user
+{
+  font-size: 0.8em;
+}
+
+#header .util .user #user-bar-greeting { margin: 0 0 0 2px; }
+#header .util .user #user-bar-greeting a
+{
+  color: black;
+}
+
+#header .util .user #user-bar-action { margin: -2px 0 0 2px; }
+#header .util .user #user-bar-action a
+{
+  color: #6a6a6a;
+}
+
+
+#header .util .search {}
+
+#header .util .search input.search-input
+{
+  float: left;
+  margin: 0;
+  margin-top: 2px;
+  border: 2px solid #9d9d9d;
+  width: 205px;
+  height: 14px;
+  padding: 3px;
+}
+
+#header .util .search input.search-submit
+{
+  float: left;
+  width: 50px;
+  height: 24px;
+  margin: 2px 0 0 2px;
+  padding: 0;
+  border: 0;
+  background: transparent url('/images/header_search.png') no-repeat center top;
+  text-indent: -1000em;
+  cursor: pointer;
+  cursor: hand; /* for IE 5.x */
+}
