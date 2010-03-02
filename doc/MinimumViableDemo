@@ -1,0 +1,138 @@
+
+######################################################################
+Menu
+######################################################################
+
+Sign In
+Upload
+Play/Home
+    Home page
+List
+    User list
+    Game list
+
+
+######################################################################
+Functionality
+######################################################################
+
+Sign In
+    User Functionality
+        Sign In
+        Create Account
+        Profile
+            Edit
+List
+    List all games alphabetically
+Upload
+    Multiple files, direct to S3
+Play
+    Flash emulator
+    Rating
+        View
+        Submit
+Home
+    Recent Activity
+        New Users
+        Recent Ratings
+    Top Games
+        Sort by "ranked value" field
+Admin
+    List all users
+    List all games
+    Feedback messages
+        
+        
+######################################################################
+Models, Stage 1
+######################################################################
+
+Game
+    PK = ID
+    -> User (FK)
+    -> Thumbnail (FK) (S3 Object ID - user selected default)
+    Avg Rating
+    Number of Ratings
+    Ranked value -> avg * log(num ratings + 1)
+    Deleted
+    PlayCount
+    Removed (DMCA)
+    Platform (NES, SNES)
+    File (Object ID)
+    Description
+    Title
+    isAdult
+    Date
+
+Thumbnail
+    PK = ID
+    -> Game (FK)
+    Path (Object ID)
+    Width
+    Height
+
+User
+    PK = ID
+    Date
+    Photo (Object ID)
+    Name
+    Email
+    About
+    Expiration Date
+
+Rating
+    PK = Game, User
+    -> Game (FK)
+    -> User (FK)
+    Rating
+    Date
+
+Feedback
+    PK = ID
+    -> User (FK) (optional)
+    Email (optional, for user-less submissions)
+    isAnonymous
+    Body
+    Date
+    SubmissionURL (what page the user were viewing)
+
+italics = index column
+
+
+######################################################################
+Models, Stage 2
+######################################################################
+
+UserComment
+    PK = ID
+    -> User (FK)
+    Body
+    Date
+
+GameComment
+    PK = ID
+    -> Game (FK)
+    -> User (FK)
+    Body
+    Date
+    
+UserWebsite (website fields on user pages)
+    -> User (FK)
+    Website
+    Type (Twitter, Facebook, Scribd, etc.)
+
+UserSearchEngineQuery
+    PK = ID
+    -> User (PK)
+    Search Engine
+    Body
+    Date
+    IP
+    
+GameSearchEngineQuery
+    PK = ID
+    -> Game (PK)
+    Search Engine
+    Body
+    Date
+    IP
