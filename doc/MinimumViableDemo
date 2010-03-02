@@ -150,8 +150,10 @@ Stage 1 Detailed Schema
 // :string, :text, :integer, :decimal, :float, :date, :boolean ...
 
 Game
-    User (FK)
-    Thumbnail (FK) (S3 Object ID - user selected default)
+    belongs_to :user
+    belongs_to :thumnail   # Default thumbnail
+    
+    has_many :ratings
     
     avg_rating:float
     num_ratings:integer
@@ -169,7 +171,7 @@ Game
     
 
 Thumbnail
-    Game (FK)
+    belongs_to :game    # Many thumbnails to one game
     
     path:string
     width:integer
@@ -178,6 +180,8 @@ Thumbnail
     model thumbnail path:string width:integer height:integer
 
 User // JUST _ADD_ ATTRIBUTES
+    has_many :games
+    
     photo:string
     name:string
     about:text
@@ -186,15 +190,15 @@ User // JUST _ADD_ ATTRIBUTES
     // by hand
 
 Rating
-    Game (FK)
-    User (FK)
+    belongs_to :game
+    belongs_to :user
     
     rating:integer
     
     model rating rating:integer
 
 Feedback
-    User (FK) (optional)
+    belongs_to :user
     
     email:string
     body:text
