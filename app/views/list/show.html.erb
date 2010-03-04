@@ -1,0 +1,20 @@
+<h3> All Games </h3>
+
+<ul>
+<% @games.each do |game| %>
+    <li><b><%= game.title %></b></li>
+<% end %>
+</ul>
+
+
+<h3> All Users </h3>
+
+<ul>
+<% @users.each do |user| %>
+    <% if user.name %>
+        <li><b><%= user.name %></b>, (<%= user.login %>)</li>
+    <% else %>
+        <li><b><%= user.login %></b></li>
+    <% end %>
+<% end %>
+</ul>

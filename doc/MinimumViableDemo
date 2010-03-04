@@ -58,7 +58,8 @@ Game
     PlayCount
     Removed (DMCA)
     Platform (NES, SNES)
-    File (Object ID)
+    storage_object_id:string (Object ID)
+    original_filename:string
     Description
     Title
     isAdult
@@ -67,14 +68,23 @@ Game
 Thumbnail
     PK = ID
     -> Game (FK)
-    Path (Object ID)
+    storage_object_id:string (Object ID)
+    original_filename:string
     Width
     Height
 
+UserPhoto
+    PK = ID
+    -> User (FK)
+    storage_object_id:string (Object ID)
+    original_filename:string
+    width
+    height
+    
 User
     PK = ID
+    -> UserPhoto (FK)
     Date
-    Photo (Object ID)
     Name
     Email
     About
@@ -139,69 +149,3 @@ GameSearchEngineQuery
 
 
 
-
-
-
-
-######################################################################
-Stage 1 Detailed Schema
-######################################################################
-
-// :string, :text, :integer, :decimal, :float, :date, :boolean ...
-
-Game
-    belongs_to :user
-    belongs_to :thumnail   # Default thumbnail
-    
-    has_many :ratings
-    
-    avg_rating:float
-    num_ratings:integer
-    ranked_value:float
-    deleted:boolean
-    play_count:integer
-    removed:boolean
-    platform:string
-    file:string
-    description:text
-    title:string
-    is_adult:boolean
-    
-    model game avg_rating:float num_ratings:integer ranked_value:float deleted:boolean play_count:integer removed:boolean platform:string file:string description:text title:string is_adult:boolean
-    
-
-Thumbnail
-    belongs_to :game    # Many thumbnails to one game
-    
-    path:string
-    width:integer
-    height:integer
-    
-    model thumbnail path:string width:integer height:integer
-
-User // JUST _ADD_ ATTRIBUTES
-    has_many :games
-    
-    photo:string
-    name:string
-    about:text
-    expiration:date
-    
-    // by hand
-
-Rating
-    belongs_to :game
-    belongs_to :user
-    
-    rating:integer
-    
-    model rating rating:integer
-
-Feedback
-    belongs_to :user
-    
-    email:string
-    body:text
-    submission_url:string
-    
-    model feedback email:string body:text submission_url:string

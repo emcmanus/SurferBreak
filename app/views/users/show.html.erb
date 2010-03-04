@@ -1,8 +1,47 @@
+<% if false %>
+
+    [ COMMENT ] There are three ways to hit this view:
+    
+        - Public view, viewing yourself
+        - Public view, viewing someone else
+        - Private view
+        
+<% end %>
+
+
+<h2>
+    <% if @user.name %>
+        <%= @user.name %>
+    <% else %>
+        <%= @user.login %>
+    <% end %>
+    
+    <% if current_user == @user %>
+        <span style="font-size: 0.5em;">
+            <%= link_to 'Edit', edit_account_path %>
+        </span>
+    <% end %>
+</h2>
+
+<h3> About </h3>
+
 <p>
-  <b>Login:</b>
-  <%=h @user.login %>
+    <b>Username:</b>
+    <%= @user.login %>
 </p>
- 
+
+<p>
+    <b>About:</b>
+    <% if @user.about %>
+        <%= @user.about %>
+    <% else %>
+        <%= link_to "Add", edit_account_path %>
+    <% end %>
+</p>
+
+
+<h3> Other </h3>
+
 <p>
   <b>Login count:</b>
   <%=h @user.login_count %>
@@ -32,6 +71,4 @@
   <b>Current login ip:</b>
   <%=h @user.current_login_ip %>
 </p>
- 
- 
-<%= link_to 'Edit', edit_account_path %>
+

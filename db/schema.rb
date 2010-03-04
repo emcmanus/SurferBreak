@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100302135206) do
+ActiveRecord::Schema.define(:version => 20100304104509) do
 
   create_table "feedbacks", :force => true do |t|
     t.string   "email"
@@ -21,21 +21,22 @@ ActiveRecord::Schema.define(:version => 20100302135206) do
   end
 
   create_table "games", :force => true do |t|
-    t.float    "avg_rating",   :default => 0.0
-    t.integer  "num_ratings",  :default => 0
-    t.float    "ranked_value", :default => 0.0
-    t.boolean  "deleted",      :default => false
-    t.integer  "play_count",   :default => 0
-    t.boolean  "removed",      :default => false
-    t.string   "platform",                        :null => false
-    t.string   "file"
+    t.float    "avg_rating",        :default => 0.0
+    t.integer  "num_ratings",       :default => 0
+    t.float    "ranked_value",      :default => 0.0
+    t.boolean  "deleted",           :default => false
+    t.integer  "play_count",        :default => 0
+    t.boolean  "removed",           :default => false
+    t.string   "platform",                             :null => false
+    t.string   "storage_object_id"
     t.text     "description"
     t.string   "title"
-    t.boolean  "is_adult",     :default => false
+    t.boolean  "is_adult",          :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "thumbnail_id"
+    t.string   "original_filename"
   end
 
   create_table "ratings", :force => true do |t|
@@ -47,12 +48,21 @@ ActiveRecord::Schema.define(:version => 20100302135206) do
   end
 
   create_table "thumbnails", :force => true do |t|
-    t.string   "path",       :null => false
-    t.integer  "width",      :null => false
-    t.integer  "height",     :null => false
+    t.string   "storage_object_id", :null => false
+    t.integer  "width",             :null => false
+    t.integer  "height",            :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "game_id"
+    t.string   "original_filename"
+  end
+
+  create_table "userPhotos", :force => true do |t|
+    t.integer "user_id"
+    t.string  "storage_object_id", :null => false
+    t.string  "original_filename", :null => false
+    t.integer "width",             :null => false
+    t.integer "height",            :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -73,9 +83,9 @@ ActiveRecord::Schema.define(:version => 20100302135206) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "about"
-    t.string   "photo"
     t.string   "name"
     t.date     "expiration"
+    t.integer  "userPhoto_id"
   end
 
   add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"

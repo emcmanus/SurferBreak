@@ -9,10 +9,22 @@ a:hover { text-decoration: underline; }
   SITE-SPECIFIC GLOBALS
 -------------------------------------------------------- */
 
+form input[type="submit"], form input[type="button"] {
+  font-size: 1.4em;
+  margin-right: 10px;
+}
+
+input[type="text"], form textarea, input[type="password"] {
+  font-size: 1.4em;
+  padding: 7px;
+  padding-bottom: 5px;
+}
+
+
 #global-container
 {
   margin-top: 0;
-  padding-top: 10px;
+  padding: 10px 0 40px 0;
 }
 
 /* Nav */

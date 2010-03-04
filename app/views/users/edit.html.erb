@@ -1,9 +1,18 @@
-<h1>Edit My Account</h1>
+<h2>Edit My Account</h2>
+
+<div style="width: 600px; padding: 10px; background-color: #ededed; margin: 5px 0;">
+    
+    <% form_for @user, :url => account_path do |f| %>
+      <%= f.error_messages %>
+      <%= render :partial => "form", :object => f %>
+      
+      <%= f.submit "Save!" %>
+      
+      <input type="button" name="cancel" value="Cancel" onclick="javascript:window.location='<%= account_path %>';"></input>
+      
+      <br/>
+    <% end %>
+    
+</div>
  
-<% form_for @user, :url => account_path do |f| %>
-  <%= f.error_messages %>
-  <%= render :partial => "form", :object => f %>
-  <%= f.submit "Update" %>
-<% end %>
- 
-<br /><%= link_to "My Profile", account_path %>
+<br />

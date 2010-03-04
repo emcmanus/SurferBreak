@@ -1,11 +1,21 @@
 class UsersController < ApplicationController
-  before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_user, :only => [:show, :edit, :update]
-
+  
+  # Auth constraints
+  before_filter :require_no_user, :only => [:new, :create]      # Registration
+  before_filter :require_user, :only => [:show, :edit, :update] # "My Profile" Actions
+  
+  
+  def showPublicProfile
+    @user = User.find(params[:id])
+    render :action => :show
+  end
+  
+  
   def new
     @user = User.new
   end
-
+  
+  
   def create
     @user = User.new(params[:user])
     if @user.save
@@ -15,15 +25,18 @@ class UsersController < ApplicationController
       render :action => :new
     end
   end
-
+  
+  
   def show
     @user = @current_user
   end
-
+  
+  
   def edit
     @user = @current_user
   end
-
+  
+  
   def update
     @user = @current_user # makes our views "cleaner" and more consistent
     if @user.update_attributes(params[:user])
@@ -33,4 +46,5 @@ class UsersController < ApplicationController
       render :action => :edit
     end
   end
+  
 end
