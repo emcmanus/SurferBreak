@@ -4,29 +4,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  
   <title><%= controller.controller_name %>: <%= controller.action_name %></title>
   
   <%= javascript_include_tag :defaults %>
   
   <%= stylesheet_link_tag 'scaffold' %>
-  
   <%= stylesheet_link_tag 'blueprint/screen', :media => "screen, projection" %>
   <%= stylesheet_link_tag 'blueprint/print', :media => "print" %>
   <!--[if lt IE 8]>
     <%= stylesheet_link_tag 'blueprint/ie', :media => "screen, projection" %>
   <![endif]-->
-  
   <%= stylesheet_link_tag 'application' %>
+  
+  <%= yield :head %>
   
 </head>
 
-
-
-<body>    
+<body>
 
 <div class="container" id="global-container">
    
-  <h1><%= link_to "Demo", root_url, {:style => 'color: black;'} %></h1>
+  <h1><%= link_to "Tech", root_url, {:style => 'color: black;'} %></h1>
   
   <div class="span-24" id="header">
     <div class="span-20">

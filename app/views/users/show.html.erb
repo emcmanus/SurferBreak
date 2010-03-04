@@ -5,7 +5,7 @@
         - Public view, viewing yourself
         - Public view, viewing someone else
         - Private view
-        
+    
 <% end %>
 
 
@@ -18,57 +18,69 @@
     
     <% if current_user == @user %>
         <span style="font-size: 0.5em;">
-            <%= link_to 'Edit', edit_account_path %>
+            <%= link_to '(Edit)', edit_account_path %>
         </span>
     <% end %>
 </h2>
 
-<h3> About </h3>
+<div style="padding: 15px; border: 1px solid #ccc;" class="span-12">
+    <h3> Games </h3>
 
-<p>
-    <b>Username:</b>
-    <%= @user.login %>
-</p>
+    <p>
+        <% @user.games.each do |game| %>
+            <%= link_to game.original_filename, game %>
+        <% end %>
+    </p>
 
-<p>
-    <b>About:</b>
-    <% if @user.about %>
-        <%= @user.about %>
-    <% else %>
-        <%= link_to "Add", edit_account_path %>
-    <% end %>
-</p>
+    <hr />
 
+    <h3> About </h3>
 
-<h3> Other </h3>
+    <p>
+        <b>Username:</b>
+        <%= @user.login %>
+    </p>
 
-<p>
-  <b>Login count:</b>
-  <%=h @user.login_count %>
-</p>
+    <p>
+        <b>About:</b>
+        <% if @user.about.nil? %>
+            <%= @user.about %>
+        <% else %>
+            <%= link_to "Add content", edit_account_path %>
+        <% end %>
+    </p>
+
+    <hr />
+
+    <h3> Other </h3>
+
+    <p>
+      <b>Login count:</b>
+      <%=h @user.login_count %>
+    </p>
  
-<p>
-  <b>Last request at:</b>
-  <%=h @user.last_request_at %>
-</p>
+    <p>
+      <b>Last request at:</b>
+      <%=h @user.last_request_at %>
+    </p>
  
-<p>
-  <b>Last login at:</b>
-  <%=h @user.last_login_at %>
-</p>
+    <p>
+      <b>Last login at:</b>
+      <%=h @user.last_login_at %>
+    </p>
  
-<p>
-  <b>Current login at:</b>
-  <%=h @user.current_login_at %>
-</p>
+    <p>
+      <b>Current login at:</b>
+      <%=h @user.current_login_at %>
+    </p>
  
-<p>
-  <b>Last login ip:</b>
-  <%=h @user.last_login_ip %>
-</p>
+    <p>
+      <b>Last login ip:</b>
+      <%=h @user.last_login_ip %>
+    </p>
  
-<p>
-  <b>Current login ip:</b>
-  <%=h @user.current_login_ip %>
-</p>
-
+    <p>
+      <b>Current login ip:</b>
+      <%=h @user.current_login_ip %>
+    </p>
+</div>

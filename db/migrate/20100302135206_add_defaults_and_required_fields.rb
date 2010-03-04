@@ -11,7 +11,7 @@ class AddDefaultsAndRequiredFields < ActiveRecord::Migration
     change_column :games, :is_adult, :boolean, :default => false
     
     # Games, required
-    change_column :games, :platform, :string, :null => false
+    change_column :games, :platform, :string, :default => "UNKNOWN"
     
     # Ratings
     change_column :ratings, :rating, :integer, :null => false

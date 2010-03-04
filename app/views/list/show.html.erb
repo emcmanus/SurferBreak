@@ -1,18 +1,20 @@
-<h3> All Games </h3>
+<h2> List All </h2>
+
+<h3> Games </h3>
 
 <ul>
 <% @games.each do |game| %>
-    <li><b><%= game.title %></b></li>
+    <li><%= link_to game.original_filename, game %><br/></li>
 <% end %>
 </ul>
 
 
-<h3> All Users </h3>
+<h3> Users </h3>
 
 <ul>
 <% @users.each do |user| %>
     <% if user.name %>
-        <li><b><%= user.name %></b>, (<%= user.login %>)</li>
+        <li><b><%= user.name %></b>, (<%= link_to user.login, user %>)</li>
     <% else %>
         <li><b><%= user.login %></b></li>
     <% end %>

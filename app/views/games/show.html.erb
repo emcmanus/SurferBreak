@@ -1,3 +1,12 @@
 
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+<h2> Game Listing </h2>
+
+<p>
+    <b>Original filename</b> <%= @game.original_filename %>
+</p> <br />
+
+<p>
+    <b>Upload Complete?</b> <%= if not @game.storage_object_id; "No"; else; "Yes"; end %>
+</p> <br />
+
+<%= link_to 'Back', list_path %>

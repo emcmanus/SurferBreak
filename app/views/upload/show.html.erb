@@ -1,1 +1,96 @@
-upload show action
+<% content_for :head do %>
+    <style type="text/css">
+    
+        #spanButtonPlaceHolder
+        {
+            float: left;
+        }
+    
+        .swfupload
+        {
+            float: left;
+            cursor: pointer;
+        }
+    
+        #btnCancel
+        {
+            float: left;
+            width: 134px;
+            height: 48px;
+            margin: 0;
+            margin-left: 10px;
+            /*padding: 0;
+            border: 0;
+            background: transparent url('/images/stop_all_button.png') no-repeat center top;
+            text-indent: -1000em;
+            cursor: pointer;
+            cursor: hand; /* for IE 5.x */
+        }
+    </style>
+<% end %>
+
+<script type="text/javascript" src="/javascripts/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="/javascripts/swfupload/swfupload.queue.js"></script>
+<script type="text/javascript" src="/javascripts/swfupload/fileprogress.js"></script>
+<script type="text/javascript" src="/javascripts/swfupload/handlers.js"></script>
+
+<script type="text/javascript">
+	var swfu;
+
+	window.onload = function() {
+		var settings = {
+			flash_url : "/swfs/swfupload.swf",
+			upload_url: "<%= @upload_url %>",
+			http_success : [ 200, 201, 204 ], 		// FOR AWS
+            
+			file_size_limit : "25 MB",
+			file_types : "*",
+			file_types_description : "All Files",
+			file_upload_limit : 100,
+			file_queue_limit : 0,
+			file_post_name : "file", 				// FOR AWS
+            
+			custom_settings : {
+				progressTarget : "fsUploadProgress",
+				cancelButtonId : "btnCancel"
+			},
+            // debug: <%= ENV['RAILS_ENV']=='development' ? 'true' : 'false' %>,
+            
+			// Button settings
+			button_image_url : "/images/upload/browse_sprite.png",
+			button_placeholder_id : "spanButtonPlaceHolder",
+			button_width: 63,
+			button_height: 26,
+
+			// The event handler functions are defined in handlers.js
+			file_queued_handler : fileQueued,
+			file_queue_error_handler : fileQueueError,
+			file_dialog_complete_handler : fileDialogComplete,
+			upload_start_handler : uploadStart,
+			upload_progress_handler : uploadProgress,
+			upload_error_handler : uploadError,
+			upload_success_handler : uploadSuccess,
+			upload_complete_handler : uploadComplete,
+			queue_complete_handler : queueComplete//,	// Queue plugin event
+		};
+        
+		swfu = new SWFUpload(settings);
+     };
+</script>
+
+<h2> Game Uploads </h2>
+
+<div style="border: 1px solid #ccc; padding: 15px;" class="span-12">
+    <form id="form" action="/upload/upload" method="post" enctype="multipart/form-data">
+    		<div class="fieldset flash" id="fsUploadProgress">
+    		<h3> Queue </h3>
+    		</div>
+    	<div id="divStatus">0 Files Uploaded</div>
+    	<br />
+    	<hr />
+    	<div>
+    		<span id="spanButtonPlaceHolder"></span>
+    		<input id="btnCancel" type="button" value="Cancel All Uploads" onclick="swfu.cancelQueue();" disabled="disabled" />
+    	</div>
+    </form>
+</div>

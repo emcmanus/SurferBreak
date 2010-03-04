@@ -13,16 +13,18 @@ ActionController::Routing::Routes.draw do |map|
   # map.resources :feedbacks
   
   # Games
-  map.connect "game/:id", :controller => "games", :action => "show"
+  map.game "game/:id", :controller => "games", :action => "show"
   
   # User profiles
-  map.connect "user/:id", :controller => "users", :action => "showPublicProfile"
+  map.user "user/:id", :controller => "users", :action => "showPublicProfile"
   
   # List
   map.list "list", :controller => "list", :action => "show"
   
   # Upload
   map.upload "upload", :controller => "upload", :action => "show"
+  map.upload_key "upload/get_key", :controller => "upload", :action => "get_upload_key" # For S3 Policy Generation
+  map.upload_finish "upload/finish", :controller => "upload", :action => "finish_upload"
   
   # Home
   map.root :controller => "home", :action => "show"

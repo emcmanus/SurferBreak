@@ -5,10 +5,12 @@ class UpdatePathColumns < ActiveRecord::Migration
     
     # Games
     rename_column :games, :file, :storage_object_id
+    change_column :games, :storage_object_id, :text # S3's limit is 1024b
     add_column :games, :original_filename, :string
     
     # Thumbnails
     rename_column :thumbnails, :path, :storage_object_id
+    change_column :thumbnails, :storage_object_id, :text # S3's limit is 1024b
     add_column :thumbnails, :original_filename, :string
     
     # Users
@@ -18,11 +20,13 @@ class UpdatePathColumns < ActiveRecord::Migration
   
   def self.down
     rename_column :games, :storage_object_id, :file
+    change_column :games, :file, :string
     remove_column :games, :original_filename
     
     # Thumbnails
     rename_column :thumbnails, :storage_object_id, :path
-    remove_column :games, :original_filename
+    change_column :thumbnails, :path, :string
+    remove_column :thumbnails, :original_filename
     
     # Users
     add_column :users, :photo, :string

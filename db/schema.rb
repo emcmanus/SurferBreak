@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(:version => 20100304104509) do
     t.boolean  "deleted",           :default => false
     t.integer  "play_count",        :default => 0
     t.boolean  "removed",           :default => false
-    t.string   "platform",                             :null => false
-    t.string   "storage_object_id"
+    t.string   "platform",          :default => "UNKNOWN"
+    t.text     "storage_object_id"
     t.text     "description"
     t.string   "title"
     t.boolean  "is_adult",          :default => false
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(:version => 20100304104509) do
   end
 
   create_table "thumbnails", :force => true do |t|
-    t.string   "storage_object_id", :null => false
+    t.text     "storage_object_id", :null => false
     t.integer  "width",             :null => false
     t.integer  "height",            :null => false
     t.datetime "created_at"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(:version => 20100304104509) do
 
   create_table "userPhotos", :force => true do |t|
     t.integer "user_id"
-    t.string  "storage_object_id", :null => false
+    t.text    "storage_object_id", :null => false
     t.string  "original_filename", :null => false
     t.integer "width",             :null => false
     t.integer "height",            :null => false

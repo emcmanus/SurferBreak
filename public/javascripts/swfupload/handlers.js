@@ -79,7 +79,7 @@ function uploadStart(file)
 	try
 	{
 		// Get a new, validated, upload policy for this file
-		new Ajax.Request('/upload/get_upload_key?' + Object.toQueryString(file), {
+		new Ajax.Request('/upload/get_key?' + Object.toQueryString(file), {
 			method:'get',
 			asynchronous: false,
 			onSuccess: function( transport ){
@@ -132,7 +132,7 @@ function uploadProgress(file, bytesLoaded, bytesTotal) {
 function uploadSuccess(file, serverData) {
 	new Ajax.Request('/upload/game_upload_done?' + Object.toQueryString(file), {
 		method:'get',
-		asynchronous: false,
+		asynchronous: true,
 		onSuccess: function(){
 			var progress = new FileProgress(file, window.swfu.customSettings.progressTarget);
 			progress.setStatus("Sending meta data.");
