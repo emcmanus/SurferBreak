@@ -1,4 +1,4 @@
-class AddDefaultsAndRequiredFields < ActiveRecord::Migration
+class UpdateDefaultsAndRequired < ActiveRecord::Migration
   def self.up
     
     # Games, defaults
@@ -11,7 +11,8 @@ class AddDefaultsAndRequiredFields < ActiveRecord::Migration
     change_column :games, :is_adult, :boolean, :default => false
     
     # Games, required
-    change_column :games, :platform, :string, :default => "UNKNOWN"
+    change_column :games, :platform, :string, :null => false, :default => "NES"
+    change_column :games, :file, :string, :null => false
     
     # Ratings
     change_column :ratings, :rating, :integer, :null => false

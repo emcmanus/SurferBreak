@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100304104509) do
+ActiveRecord::Schema.define(:version => 20100305132905) do
 
   create_table "feedbacks", :force => true do |t|
     t.string   "email"
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(:version => 20100304104509) do
     t.boolean  "deleted",           :default => false
     t.integer  "play_count",        :default => 0
     t.boolean  "removed",           :default => false
-    t.string   "platform",          :default => "UNKNOWN"
-    t.text     "storage_object_id"
+    t.string   "platform",          :default => "NES", :null => false
+    t.string   "storage_object_id",                    :null => false
     t.text     "description"
     t.string   "title"
     t.boolean  "is_adult",          :default => false
@@ -37,7 +37,11 @@ ActiveRecord::Schema.define(:version => 20100304104509) do
     t.integer  "user_id"
     t.integer  "thumbnail_id"
     t.string   "original_filename"
+    t.boolean  "is_published",      :default => false
+    t.boolean  "is_uploaded",       :default => false
   end
+
+  add_index "games", ["storage_object_id"], :name => "index_games_on_storage_object_id"
 
   create_table "ratings", :force => true do |t|
     t.integer  "rating",     :null => false
@@ -48,7 +52,7 @@ ActiveRecord::Schema.define(:version => 20100304104509) do
   end
 
   create_table "thumbnails", :force => true do |t|
-    t.text     "storage_object_id", :null => false
+    t.string   "storage_object_id", :null => false
     t.integer  "width",             :null => false
     t.integer  "height",            :null => false
     t.datetime "created_at"
@@ -59,7 +63,7 @@ ActiveRecord::Schema.define(:version => 20100304104509) do
 
   create_table "userPhotos", :force => true do |t|
     t.integer "user_id"
-    t.text    "storage_object_id", :null => false
+    t.string  "storage_object_id", :null => false
     t.string  "original_filename", :null => false
     t.integer "width",             :null => false
     t.integer "height",            :null => false

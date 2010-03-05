@@ -21,15 +21,21 @@ ActionController::Routing::Routes.draw do |map|
   # List
   map.list "list", :controller => "list", :action => "show"
   
-  # Upload
-  map.upload "upload", :controller => "upload", :action => "show"
-  map.upload_key "upload/get_key", :controller => "upload", :action => "get_upload_key" # For S3 Policy Generation
-  map.upload_finish "upload/finish", :controller => "upload", :action => "finish_upload"
+  # Uploader
+  map.upload          "upload",               :controller => "upload", :action => "show"
+  map.upload_key      "upload/policy",        :controller => "upload", :action => "generate_policy" # S3 Policy Generation
+  map.upload_finish   "upload/file_finished", :controller => "upload", :action => "file_finished"   # Single file uploaded
+  map.upload_publish  "upload/publish",       :controller => "upload", :action => "publish"         # All files uploaded
+  
+  # HTML Uploader
+  map.html_upload         "upload/html",          :controller => "upload", :action => "html_uploader"
+  map.html_upload_finish  "upload/html/upload",   :controller => "upload", :action => "html_uploader_finish"
   
   # Home
   map.root :controller => "home", :action => "show"
   
 end
+
 
 
 # Routes notes:

@@ -1,5 +1,5 @@
 development:
-  bucket_name: surfer-development
+  bucket_name: surferbreak-development
   access_key_id: 13WQ80HKRY1EJA7SH9R2
   secret_access_key: 67IJS5Tc8VQLrrougD2AJQBFyw3B2YER6dAHXvwj
 
@@ -9,6 +9,6 @@ test:
   secret_access_key: 
 
 production:
-  bucket_name: production_bucket
+  bucket_name: surferbreak
   access_key_id: 
   secret_access_key: 

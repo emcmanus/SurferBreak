@@ -11,7 +11,11 @@ The FileProgress class is not part of SWFUpload.
    package.  They are part of my application.  Without these none
    of the actions SWFUpload makes will show up in my application.
    ********************** */
+
+window.uploadIdentifierLookup = {}
+
 function fileQueued(file) {
+	window.uploadIdentifierLookup[file.id] = "";
 	try {
 		var progress = new FileProgress(file, window.swfu.customSettings.progressTarget);
 		progress.setStatus("Pending...");
@@ -79,21 +83,23 @@ function uploadStart(file)
 	try
 	{
 		// Get a new, validated, upload policy for this file
-		new Ajax.Request('/upload/get_key?' + Object.toQueryString(file), {
+		new Ajax.Request('/upload/policy?' + Object.toQueryString(file), {
 			method:'get',
 			asynchronous: false,
 			onSuccess: function( transport ){
 				policyRequestSuccess = true;
 				window.swfu.debug("TRANSPORT FOLLOWING:");
 				window.swfu.debug(transport.responseJSON);
-				window.swfu.setPostParams( transport.responseJSON );
+				window.swfu.setPostParams( transport.responseJSON["policy_file"] );
+				window.swfu.debug("Setting upload_id to " + transport.responseJSON["upload_id"].toString());
+				window.uploadIdentifierLookup[file.id] = transport.responseJSON["upload_id"];
 			},
 			onException: function( transport, e ){
-				window.debug(e);
+				window.swfu.debug("onException when requesting policy: " + e);
 				policyRequestSuccess = false;
 			},
 			onFailure: function( file, e ){
-				window.debug(e);
+				window.swfu.debug("onFailure when requesting policy: " + e);
 				policyRequestSuccess = false;
 			}
 		});
@@ -123,31 +129,39 @@ function uploadProgress(file, bytesLoaded, bytesTotal) {
 
 		var progress = new FileProgress(file, window.swfu.customSettings.progressTarget);
 		progress.setProgress(percent);
-		progress.setStatus("Uploading...");
+		progress.setStatus("Uploading... (" + percent.toString() + "%)");
 	} catch (ex) {
 		window.swfu.debug(ex);
 	}
 }
 
 function uploadSuccess(file, serverData) {
-	new Ajax.Request('/upload/game_upload_done?' + Object.toQueryString(file), {
+	window.swfu.debug("Debug, upload ID in uploadSuccess(): " + file.name);
+	try {
+		var progress = new FileProgress(file, window.swfu.customSettings.progressTarget);
+		progress.setComplete();
+		progress.setStatus("Finishing...");
+		progress.toggleCancel(false);
+	} catch (ex) {
+		window.swfu.debug(ex);
+	}
+	file.upload_id = window.uploadIdentifierLookup[file.id];
+	new Ajax.Request('/upload/file_finished?' + Object.toQueryString(file), {
 		method:'get',
 		asynchronous: true,
 		onSuccess: function(){
 			var progress = new FileProgress(file, window.swfu.customSettings.progressTarget);
-			progress.setStatus("Sending meta data.");
+			progress.setStatus("Finished.");
+		},
+		onException: function(e){
+			window.swfu.debug("uploadSuccess(): onException");
+			progress.setStatus("Error finishing the upload. You may need to try again.");
+		},
+		onFailure: function(e){
+			window.swfu.debug("uploadSuccess(): onFailure");
+			progress.setStatus("Error finishing the upload. You may need to try again.");
 		}
 	});
-	
-	try {
-		var progress = new FileProgress(file, window.swfu.customSettings.progressTarget);
-		progress.setComplete();
-		progress.setStatus("Complete.");
-		progress.toggleCancel(false);
-
-	} catch (ex) {
-		window.swfu.debug(ex);
-	}
 }
 
 function uploadError(file, errorCode, message) {
@@ -205,6 +219,7 @@ function uploadError(file, errorCode, message) {
 function uploadComplete(file) {
 	if (window.swfu.getStats().files_queued === 0) {
 		document.getElementById(window.swfu.customSettings.cancelButtonId).disabled = true;
+		$('publishBtn').toggle();
 	}
 }
 

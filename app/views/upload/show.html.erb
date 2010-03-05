@@ -46,7 +46,7 @@
 			file_size_limit : "25 MB",
 			file_types : "*",
 			file_types_description : "All Files",
-			file_upload_limit : 100,
+			file_upload_limit : 0,
 			file_queue_limit : 0,
 			file_post_name : "file", 				// FOR AWS
             
@@ -54,14 +54,14 @@
 				progressTarget : "fsUploadProgress",
 				cancelButtonId : "btnCancel"
 			},
-            // debug: <%= ENV['RAILS_ENV']=='development' ? 'true' : 'false' %>,
+            debug: <%= ENV['RAILS_ENV']=='development' ? 'true' : 'false' %>,
             
 			// Button settings
 			button_image_url : "/images/upload/browse_sprite.png",
 			button_placeholder_id : "spanButtonPlaceHolder",
 			button_width: 63,
 			button_height: 26,
-
+            
 			// The event handler functions are defined in handlers.js
 			file_queued_handler : fileQueued,
 			file_queue_error_handler : fileQueueError,
@@ -78,10 +78,10 @@
      };
 </script>
 
-<h2> Game Uploads </h2>
+<h2> Upload Games </h2>
 
 <div style="border: 1px solid #ccc; padding: 15px;" class="span-12">
-    <form id="form" action="/upload/upload" method="post" enctype="multipart/form-data">
+    <form id="form" action="/upload/html" method="post" enctype="multipart/form-data">
     		<div class="fieldset flash" id="fsUploadProgress">
     		<h3> Queue </h3>
     		</div>
@@ -89,8 +89,14 @@
     	<br />
     	<hr />
     	<div>
-    		<span id="spanButtonPlaceHolder"></span>
-    		<input id="btnCancel" type="button" value="Cancel All Uploads" onclick="swfu.cancelQueue();" disabled="disabled" />
+		    <span id="spanButtonPlaceHolder"></span>
+		    <input id="btnCancel" type="button" value="Cancel All Uploads" onclick="swfu.cancelQueue();" disabled="disabled" />
+    	    <br/><br/>
+    		<%= link_to "Publish!", :controller => "upload", :action => "publish" %>
     	</div>
     </form>
+</div>
+
+<div class="span-24" style="padding-top: 10px;">
+    <%= link_to "HTML Uploader", html_upload_path %>
 </div>

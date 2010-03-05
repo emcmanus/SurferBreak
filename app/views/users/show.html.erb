@@ -10,7 +10,7 @@
 
 
 <h2>
-    <% if @user.name %>
+    <%  if not @user.name.nil? and not @user.name.empty?  %>
         <%= @user.name %>
     <% else %>
         <%= @user.login %>
@@ -27,9 +27,11 @@
     <h3> Games </h3>
 
     <p>
+        <ul>
         <% @user.games.each do |game| %>
-            <%= link_to game.original_filename, game %>
+            <li><%= link_to game.title, game %></li>
         <% end %>
+        </ul>
     </p>
 
     <hr />
@@ -43,10 +45,14 @@
 
     <p>
         <b>About:</b>
-        <% if @user.about.nil? %>
-            <%= @user.about %>
+        <% if current_user == @user %>
+            <% if not @user.about.nil? and not @user.about.empty? %>
+                <%= @user.about %>
+            <% else %>
+                <%= link_to "Add content", edit_account_path %>
+            <% end %>
         <% else %>
-            <%= link_to "Add content", edit_account_path %>
+            (empty)
         <% end %>
     </p>
 

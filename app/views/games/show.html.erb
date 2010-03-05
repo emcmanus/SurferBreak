@@ -3,10 +3,12 @@
 
 <p>
     <b>Original filename</b> <%= @game.original_filename %>
-</p> <br />
-
+</p>
+<p>
+    <b>Title</b> <%= @game.title %>
+</p>
 <p>
     <b>Upload Complete?</b> <%= if not @game.storage_object_id; "No"; else; "Yes"; end %>
-</p> <br />
+</p>
 
 <%= link_to 'Back', list_path %>

@@ -1,31 +1,42 @@
 class UpdatePathColumns < ActiveRecord::Migration
   
   def self.up
-    # For all storage objects: rename "file" to "storage_object_id", and add "original_filename"
+    # For all storage objects: rename "file" to "storage_object_id", add "original_filename", and add non-null requirement
     
     # Games
-    rename_column :games, :file, :storage_object_id
-    change_column :games, :storage_object_id, :text # S3's limit is 1024b
-    add_column :games, :original_filename, :string
+    change_table :games do |t|
+      t.rename  :file, :storage_object_id
+      t.string  :original_filename
+    end
+     
+    # rename_column :games, :file,              :storage_object_id
+    # change_column :games, :storage_object_id, :null => false
+    # add_column    :games, :original_filename, :string
     
     # Thumbnails
-    rename_column :thumbnails, :path, :storage_object_id
-    change_column :thumbnails, :storage_object_id, :text # S3's limit is 1024b
-    add_column :thumbnails, :original_filename, :string
+    # rename_column :thumbnails,  :path,              :storage_object_id
+    # change_column :thumbnails,  :storage_object_id, :null => false
+    # add_column    :thumbnails,  :original_filename, :string
+    
+    change_table :thumbnails do |t|
+      t.rename  :path, :storage_object_id
+      t.string  :original_filename
+    end
+    
     
     # Users
     remove_column :users, :photo
-    # We'll add a new UserPhoto model in the next migration  
+    # We add a new UserPhoto model in the next migration
   end
   
   def self.down
+    change_column :games, :storage_object_id
     rename_column :games, :storage_object_id, :file
-    change_column :games, :file, :string
     remove_column :games, :original_filename
     
     # Thumbnails
+    change_column :thumbnails, :storage_object_id
     rename_column :thumbnails, :storage_object_id, :path
-    change_column :thumbnails, :path, :string
     remove_column :thumbnails, :original_filename
     
     # Users

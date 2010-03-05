@@ -3,7 +3,11 @@
 <h3> Top Games </h3>
 
 <% @top_games.each do |game| %>
-    <%= link_to game.original_filename, game %><br/>
+    <% if not game.title.nil? and not game.title.empty? %>
+        <%= link_to game.title, game %>
+    <% else %>
+        <%= link_to game.original_filename, game %>
+    <% end %><br/>
 <% end %>
 <br/>
 
