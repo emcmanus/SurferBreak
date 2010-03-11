@@ -1,26 +1,35 @@
 <h2> List All </h2>
 
-<h3> Games </h3>
 
-<ul>
-<% @games.each do |game| %>
-    <% if not game.title.nil? and not game.title.empty? %>
-        <li><%= link_to game.title, game %></li>
-    <% else %>
-        <li><%= link_to game.original_filename, game %></li>
+<div class="span-18">    
+    <h3> <span class="highlight"> Games </span></h3>
+    
+    <% @games.each_with_index do | @game, @index| %>
+        <div class="span-6 <%= "last" if (@index + 1) % 3 == 0 %>" style="height: 250px;">
+            <%= render :partial => 'layouts/gameTile' %>
+        </div>
     <% end %>
-<% end %>
-</ul>
+</div>
 
 
-<h3> Users </h3>
 
-<ul>
-<% @users.each do |user| %>
-    <% if not user.name.nil? and not user.name.empty? %>
-        <li><b><%= user.name %></b>, (<%= link_to user.login, user %>)</li>
-    <% else %>
-        <li><b><%= user.login %></b>, (<%= link_to "view profile", user %>)</li>
-    <% end %>
-<% end %>
-</ul>
+<div class="span-6 last">
+    <h3> <span class="highlight"> Users </span></h3>
+    
+    <ul>
+        <% @users.each do |user| %>
+            <li><h5 style="margin-bottom: 3px;">
+                <% if not user.name.nil? and not user.name.empty? %>
+                    <b><%= user.name %></b> (<%= link_to user.login, user %>)
+                <% else %>
+                    <b><%= user.login %></b> (<%= link_to "view profile", user %>)
+                <% end %>
+            </h5>
+        
+            Created <%= time_ago_in_words user.created_at %> ago<br />
+            <%= user.games.count %> Games<br/>
+        
+            <hr style="margin-top: 3px;"/></li>
+        <% end %>
+    </ul>
+</div>

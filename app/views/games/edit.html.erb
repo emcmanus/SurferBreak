@@ -1,12 +1,39 @@
-<h1>Editing game</h1>
+<h2>Edit Game</h2>
 
-<% form_for(@game) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
+<div class="span-16" style="padding: 15px; border: 1px solid #ededed; margin: 5px 0;">
+    
+    <h3><span class="highlight"> General </span></h3>
+    
+    <% form_for(@game) do |f| %>
+    <%= f.error_messages %>
+    
+    <%= f.label :title %><br />
+    <%= f.text_field :title %><br />
+    <br/>
+    
+    <%= f.label :description %><br />
+    <%= f.text_area :description %><br />
+    <br/>
+    
+    <%= f.label :ranked_value %><br />
+    <%= f.text_field :ranked_value %><br />
+    <br/>
+    
+    <%= f.label :platform %><br />
+    <%= f.text_field :platform %><br />
+    <br/>
+    
+    
+    <h3><span class="highlight"> Thumbnails </span></h3>
+    
+    <%= f.label "Default Thumbnail:" %>
+    
+    
+    <div >
+    
+    <br />
     <%= f.submit 'Update' %>
-  </p>
-<% end %>
 
-<%= link_to 'Show', @game %> |
-<%= link_to 'Back', games_path %>
+    <% end %>
+
+</div>

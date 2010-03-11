@@ -140,7 +140,7 @@ function uploadSuccess(file, serverData) {
 	try {
 		var progress = new FileProgress(file, window.swfu.customSettings.progressTarget);
 		progress.setComplete();
-		progress.setStatus("Finishing...");
+		progress.setStatus("Generating Thumbnails...");
 		progress.toggleCancel(false);
 	} catch (ex) {
 		window.swfu.debug(ex);

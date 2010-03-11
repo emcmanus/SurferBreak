@@ -1,5 +1,5 @@
-<h2>Register, it's easy!</h2>
- 
+<h2>Register, it's easy! <%= link_to "(Or Log In)", login_path, :class => "title_link" %></h2>
+
 <% form_for @user, :url => account_path do |f| %>
   <%= f.error_messages %>
   <%= render :partial => "form", :object => f %>

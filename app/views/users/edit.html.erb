@@ -1,9 +1,10 @@
 <h2>Edit My Account</h2>
 
-<div style="width: 600px; padding: 15px; border: 1px solid #ededed; margin: 5px 0;">
+<div class="span-16" style="padding: 15px; border: 1px solid #ededed; margin: 5px 0;">
     
     <% form_for @user, :url => account_path do |f| %>
       <%= f.error_messages %>
+      
       <%= render :partial => "form", :object => f %>
       
       <%= f.submit "Save!" %>

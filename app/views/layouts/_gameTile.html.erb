@@ -1,0 +1,14 @@
+<div style="padding: 5px 5px; background-color: #000;">
+    <% if @game.id == 1 %>
+        <%= link_to image_tag("http://localhost/test_rom_screenshots/snes/#{@game.original_filename}/#{@game.original_filename}_00016.png", :border=>0, :width=>221, :height=>192), @game %>
+    <% elsif @game.id == 6 %>
+        <%= link_to image_tag("http://localhost/test_rom_screenshots/snes/#{@game.original_filename}/#{@game.original_filename}_00002.png", :border=>0, :width=>221, :height=>192), @game %>
+    <% elsif @game.id == 10 %>
+        <%= link_to image_tag("http://localhost/test_rom_screenshots/snes/#{@game.original_filename}/#{@game.original_filename}_00019.png", :border=>0, :width=>221, :height=>192), @game %>
+    <% elsif @game.id == 13 %>
+        <%= link_to image_tag("http://localhost/test_rom_screenshots/snes/#{@game.original_filename}/#{@game.original_filename}_00000.png", :border=>0, :width=>221, :height=>192), @game %>
+    <% else %>
+        <%= link_to image_tag("http://localhost/test_rom_screenshots/snes/#{@game.original_filename}/#{@game.original_filename}_00010.png", :border=>0, :width=>221, :height=>192), @game %>
+    <% end %>
+</div>
+<span style="font-weight: bold;"><%= truncate link_to( @game.title, @game ), :length => 80 %></span>

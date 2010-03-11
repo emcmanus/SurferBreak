@@ -1,5 +1,45 @@
 
-<h2> Game Listing </h2>
+<h2>
+    <%= @game.title %>
+    <% if not current_user.nil? and current_user == @game.user %>
+        <%= link_to '(Edit)', edit_game_path( :id=>@game.id ), {:class=>"title_link"} %>
+    <% end %>
+</h2>
+
+
+
+<% content_for :head do %>
+    <script src="http://localhost/swfobject/swfobject.js" type="text/javascript"></script>
+<% end %>
+
+<div class="span-24">
+    <div style="width: 512px; height: 448px; float: left;" id="emulator_container">
+        <div id="emulator"></div>
+    </div>
+    <script type="text/javascript">
+
+        var file = "all/" + escape("<%= @game.original_filename %>");
+
+        swfobject.embedSWF("http://localhost/snes/Snes.swf?rom=" + file, "emulator", "512", "448", "10.0.0");
+    
+    </script>
+
+
+    <%= image_tag("http://localhost/snes/key.png", :style=>"float: left; width: 400px; height: 339px;") %>
+</div>
+
+<div class="span-24">&nbsp;</div>
+
+
+<h3> <span class="highlight"> Screenshots </span></h3>
+
+<% (0...20).each do |i| %>
+    <% if i < 10 %>
+        <img height="112" width="128" src="http://localhost/test_rom_screenshots/snes/<%= @game.original_filename %>/<%= @game.original_filename %>_0000<%= i.to_s %>.png">
+    <% else %>
+        <img height="112" width="128" src="http://localhost/test_rom_screenshots/snes/<%= @game.original_filename %>/<%= @game.original_filename %>_000<%= i.to_s %>.png">
+    <% end %>
+<% end %>
 
 <p>
     <b>Original filename</b> <%= @game.original_filename %>

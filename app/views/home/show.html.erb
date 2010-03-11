@@ -1,25 +1,48 @@
 <h2> Home </h2>
 
-<h3> Top Games </h3>
 
-<% @top_games.each do |game| %>
-    <% if not game.title.nil? and not game.title.empty? %>
-        <%= link_to game.title, game %>
-    <% else %>
-        <%= link_to game.original_filename, game %>
-    <% end %><br/>
-<% end %>
-<br/>
+<div class="span-24" style="margin-bottom: 50px;">
+    
+    <div class="span-8">
+        <h3> <span class="highlight"> Top Games </span></h3>
 
-<h3> New Users </h3>
+        <ol>
+        <% @top_games.each do |game| %><li>
+            <% if not game.title.nil? and not game.title.empty? %>
+                <%= link_to game.title, game %>
+            <% else %>
+                <%= link_to game.original_filename, game %>
+            <% end %></li><br/>
+        <% end %>
+        </ol>
+    </div>
 
-<% @new_users.each do |user| %>
-    <%= user.login %>, <%= user.created_at %><br/>
-<% end %>
-<br/>
+    <div class="span-14 last" style="background-color: #ededed; height: 40em;">
+        Rolling screenshots
+    </div>
 
-<h3> Recent Ratings </h3>
+</div>
 
-<% @new_ratings.each do |rating| %>
-    <%= rating.rating %><br/>
-<% end %>
+<hr />
+
+<div class="span-24">
+
+    <div class="span-12">
+        <h3> <span class="highlight"> New Users </span></h3>
+
+        <% @new_users.each do |user| %>
+            <%= user.login %>, Created <%= time_ago_in_words user.created_at %> ago <br/>
+        <% end %>
+    </div>
+
+    <div class="span-12 last">
+        <h3> <span class="highlight"> Recent Ratings </span></h3>
+
+        <% @new_ratings.each do |rating| %>
+            <%= rating.rating %><br/>
+        <% end %>
+    </div>
+    
+</div>
+
+

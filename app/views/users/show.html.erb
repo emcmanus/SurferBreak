@@ -17,14 +17,12 @@
     <% end %>
     
     <% if current_user == @user %>
-        <span style="font-size: 0.5em;">
-            <%= link_to '(Edit)', edit_account_path %>
-        </span>
+        <%= link_to '(Edit)', edit_account_path, {:class=>"title_link"} %>
     <% end %>
 </h2>
 
 <div style="padding: 15px; border: 1px solid #ccc;" class="span-12">
-    <h3> Games </h3>
+    <h3> <span class="highlight">Games</span> <span class="parenthetical">(<%= @user.games.count %>)</span></h3>
 
     <p>
         <ul>
@@ -36,7 +34,7 @@
 
     <hr />
 
-    <h3> About </h3>
+    <h3> <span class="highlight"> About </span></h3>
 
     <p>
         <b>Username:</b>
@@ -58,7 +56,7 @@
 
     <hr />
 
-    <h3> Other </h3>
+    <h3> <span class="highlight"> Other </span></h3>
 
     <p>
       <b>Login count:</b>

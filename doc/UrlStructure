@@ -1,0 +1,41 @@
+
+    SEO-Friendly Routes
+    
+
+# Your Stuff
+
+surferbreak.com/account                     // This is all stuff unique to "you" the user, eventually we can add summary type stuff
+surferbreak.com/account/profile             // For now this is the same as /account
+surferbreak.com/account/profile/edit        // Edit your account
+surferbreak.com/account/settings            // Account settings (privacy, email settings)
+surferbreak.com/account/settings/edit       // Edit account settings
+surferbreak.com/account/games               // "My Games" - list and manage the games you've uploaded
+surferbreak.com/account/games/edit/:id      // Edit a game
+surferbreak.com/account/forgot_password     // Password reset and mailer
+
+
+# Other People's Stuff
+
+surferbreak.com/users                       // Like Scribd's "Explore" for users - search, new users, recently active, etc.
+surferbreak.com/users/$login                // User profile
+surferbreak.com/console-games               // Like Scribd's "Explore" for games - search, new games, recently active, etc.
+surferbreak.com/console-games/$slug/$id     // Play the game
+
+
+# Community Stuff - Other People in Aggregate
+
+surferbreak.com/home                        // The state of the community - new games, users, comments, etc.
+
+
+# Other
+
+surferbreak.com/register        // Register -> surferbreak.com/account/new
+surferbreak.com/login           // Login    -> surferbreak.com/user_sessions/new
+surferbreak.com/logout          // Sign out -> surferbreak.com/user_sessions/destroy
+
+
+# Internal controllers
+
+surferbreak.com/internal            // Site Summary
+surferbreak.com/internal/admin      // Take action, DMCA, bans, group messages, etc.
+

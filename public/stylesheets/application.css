@@ -101,3 +101,26 @@ input[type="text"], form textarea, input[type="password"] {
   cursor: pointer;
   cursor: hand; /* for IE 5.x */
 }
+
+
+h2 .title_link
+{
+  font-size: 0.5em;
+}
+
+h2 span.parenthetical
+{
+  font-size: 0.6em;
+}
+
+h3 span
+{
+  padding: 1px 2px;
+}
+
+h3 span.parenthetical
+{
+  font-size: 0.6em;
+}
+
+

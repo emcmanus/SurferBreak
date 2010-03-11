@@ -1,4 +1,4 @@
-<h2>Login</h2>
+<h2>Log In <%= link_to "(Or Register)", register_path, :class => "title_link" %></h2>
 
 <% form_for @user_session, :url => user_session_path do |f| %>
   <%= f.error_messages %>
