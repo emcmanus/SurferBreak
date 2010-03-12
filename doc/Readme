@@ -2,4 +2,10 @@ Required Gems:
 
     authlogic
     
+    ActiveMessaging
     
+
+
+Install the required gems if they aren't installed already
+
+sudo rake gems:install

@@ -1,0 +1,23 @@
+Essentally build on Facebook's Users table.
+
+When someone hits a game view page and is signed into Facebook, show which of their friends are on the service.
+
+When a user signs in, show which of thier friends are a) on the service, and b) currently USING the service. Allow users to message their friends to set up a match.
+
+"Would you like to make this match viewable to other players on Facebook?" Clicking yes will change the user's status to include a link to the match. Anyone can then watch the match as it happens in real time, and can comment on it.
+
+After you finish the publishing step, "Would you like to tell your friends you just published this content?" Clicking "Yes" adds a status link to the that user's SurferBreak profile.
+
+Opportunity to be everything Znyga will become, but 12 months ahead of them. (Strong off-site presence.)
+
+There will be a certain friction coefficient, as getting users to leave facebook will be more difficult than getting them into games *on* facebook.
+
+
+[Root System]
+
+The events integration, posting match and publishing statuses, can be thought of as a "root system." We push user activity to Facebook in an attempt to get those users back to SurferBreak. In the same way that a literal root system draws water into the trunk of a tree, the SurferBreak root system draws users back to its site.
+
+By taking users away from Facebook we can create significant leverage. SurferBreak's "roots" should not just be limited to just user activity, however. 
+
+Published games on SurferBreak can become individual Facebook applications -- essentially shells around embedded instances of the game -- so users can bookmark single games and play them without leaving Facebook. Multiplayer matches and most SurferBreak functionality, however, will remain on SurferBreak.com.
+
