@@ -1,0 +1,25 @@
+User clicks "Create Multiplayer Match"
+
+They're taken to a new version of the game view page, which has a collapsable banner at the top that reads:
+
+Give this URL to any other players: http://surferbreak.com/games/someID/match?id=1231232412341
+
+Share this URL with any spectators: http://surferbreak.com/games/someID/broadcast_match?id=DIFFERENT_ID1231232412341
+
+
+Over the emulator, display a lightbox that indicates the status of other players:
+
++------------------------------+
+|                              |
+|  (*) Player 1 [that's you]   |
+|                              |
+|  ( ) Player 2                |
+|                              |
+|                              |
+|   +====================+     |
+|   |     Begin Game     |     |
+|   +====================+     |
+|                              |
++------------------------------+
+
+The game has to start in sync for both players, since the P2 emulator would have to fast-forward through the other player's keystrokes to get in sync. (But the emulators can't run much faster than realtime.)

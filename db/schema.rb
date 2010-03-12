@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(:version => 20100305132905) do
     t.integer  "user_id"
     t.integer  "thumbnail_id"
     t.string   "original_filename"
-    t.boolean  "is_published",      :default => false
     t.boolean  "is_uploaded",       :default => false
     t.boolean  "generated_thumbs",  :default => false
   end

@@ -5,8 +5,10 @@ MODEL FLAGS
 
     is_uploaded
 
-    is_published
-
+    DEPRICATED is_published (set to true after thumbnails have been generated)
+    
+    Instead, we'll just display a default thumbnail for the games that don't have them yet
+    
 
 UPLOAD
 
@@ -39,4 +41,8 @@ PUBLISHING
     
     Iterate over collection, showing edit forms for each file object
     
+    On submit, update fields
     
+    NOTE: "is_published" is actually set by the ActiveMessaging poller, NOT the user's "publish" flow
+    
+    (If a user skips the "publish" step, their content should still be publicly available.)
