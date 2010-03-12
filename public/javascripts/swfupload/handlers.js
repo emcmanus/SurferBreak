@@ -148,17 +148,17 @@ function uploadSuccess(file, serverData) {
 	file.upload_id = window.uploadIdentifierLookup[file.id];
 	new Ajax.Request('/upload/file_finished?' + Object.toQueryString(file), {
 		method:'get',
-		asynchronous: true,
+		asynchronous: false,
 		onSuccess: function(){
 			var progress = new FileProgress(file, window.swfu.customSettings.progressTarget);
 			progress.setStatus("Finished.");
 		},
 		onException: function(e){
-			window.swfu.debug("uploadSuccess(): onException");
+			window.swfu.debug("uploadSuccess(): onException, e:" + e.toString());
 			progress.setStatus("Error finishing the upload. You may need to try again.");
 		},
 		onFailure: function(e){
-			window.swfu.debug("uploadSuccess(): onFailure");
+			window.swfu.debug("uploadSuccess(): onFailure, e:" + e.toString());
 			progress.setStatus("Error finishing the upload. You may need to try again.");
 		}
 	});

@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20100305132905) do
     t.string   "original_filename"
     t.boolean  "is_published",      :default => false
     t.boolean  "is_uploaded",       :default => false
+    t.boolean  "generated_thumbs",  :default => false
   end
 
   add_index "games", ["storage_object_id"], :name => "index_games_on_storage_object_id"
