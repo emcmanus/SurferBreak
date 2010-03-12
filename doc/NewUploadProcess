@@ -1,0 +1,42 @@
+New Upload Process
+
+
+MODEL FLAGS
+
+    is_uploaded
+
+    is_published
+
+
+UPLOAD
+
+    Files go directly to S3, and the Flash uploader hits a "file complete" controller
+
+    The controller places a job in SQS (Using ActiveMessaging), marks the game as uploaded
+
+    A server on EC2 polls for jobs, when it finds one it does the following
+
+    Copies the ROM to a local cache
+
+    Generates Thumbnails
+
+        Two different options
+
+        The EC2 instance inserts the appropriate rows into the DB (marking the game as finished, creating thumbnail objects)
+    
+        A client with DB access sits on the web server, looking for finished, but unhandled, SQS messages. This client then makes the DB inserts.
+        
+            -> Chosing this option. ActiveMessaging has a "poller" daemon built in that does just this.
+
+    http://developer.amazonwebservices.com/connect/entry.jspa?categoryID=47&externalID=1151
+
+
+PUBLISHING
+    
+    Users hits the publish view
+    
+    All games that are uploaded but not published are collected
+    
+    Iterate over collection, showing edit forms for each file object
+    
+    
