@@ -123,7 +123,36 @@ class UploadController < ApplicationController
   end
   
   
-  def file_finished
+  def file_sent     # Successfully uploaded a file to S3
+    
+    # Early exits below
+    
+    # Required params
+    if params[:upload_id].nil? or params[:name].nil?
+      flash[:notice] = "Invalid parameters"
+      redirect_to :action => "show"
+      return
+    end
+    
+    @game = Game.find_by_storage_object_id( params[:upload_id] )
+    
+    # Verify user
+    if @game.nil? or @game.user != current_user
+      render :json => { "success" => false }.to_json, :status => 401
+      return
+    end
+    
+    # End prereq
+    
+    
+    # Enqueue SQS job
+    # TODO here
+    
+    render :json => { "success" => true }.to_json
+  end
+  
+  
+  def old_file_finished
     
     # EARLY EXITS BELOW
     

@@ -1,36 +1,33 @@
 ActionController::Routing::Routes.draw do |map|
   
   # Sessions
-  map.resource :user_session
+  map.resource  :user_session
   
-  # My Profile
-  map.resource :account, :controller => "users" # /account/new => users#new
+  # Profile
+  map.resource  :account,     :controller => "users" # /account/new => users#new
   
   # Games
-  map.game "games/:id", :controller => "games", :action => "show"
-  map.resource :game, :controller => "games"
+  map.game      "games/:id",  :controller => "games", :action => "show"
+  map.resource  :game,        :controller => "games"
   
-  # User profiles .com/users/14
-  map.user "users/:id", :controller => "users", :action => "showPublicProfile"
+  # User profiles
+  map.user      "users/:id",  :controller => "users", :action => "showPublicProfile"
   
   # List
-  map.list "list", :controller => "list", :action => "show"
+  map.list      "list",       :controller => "list",  :action => "show"
   
   # Uploader
-  map.upload          "upload",               :controller => "upload", :action => "show"
-  map.upload_key      "upload/policy",        :controller => "upload", :action => "generate_policy" # S3 Policy Generation
-  map.upload_finish   "upload/file_finished", :controller => "upload", :action => "file_finished"   # Single file uploaded
-  map.upload_publish  "upload/publish",       :controller => "upload", :action => "publish"         # All files uploaded
+  map.upload          "upload",               :controller => "upload", :action => "show"            # Show uploader
+  map.upload_key      "upload/policy",        :controller => "upload", :action => "generate_policy" # S3 policy generation
+  map.upload_finish   "upload/file_sent",     :controller => "upload", :action => "file_sent"       # Single file uploaded
+  map.upload_publish  "upload/publish",       :controller => "upload", :action => "publish"         # All uploads completed
   
   # HTML Uploader
   map.html_upload         "upload/html",          :controller => "upload", :action => "html_uploader"
   map.html_upload_finish  "upload/html/upload",   :controller => "upload", :action => "html_uploader_finish"
   
   # Home
-  map.root :controller => "home", :action => "show"
-  
-  
-  
+  map.root      :controller => "home",  :action => "show"
   
   
   # Your Stuff
@@ -60,7 +57,6 @@ end
 
 
 
-# 
 # 
 # 
 #     SEO-Friendly Routes

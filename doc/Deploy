@@ -1,0 +1,9 @@
+Deploy Sanity Check:
+
+    - ActiveMessaging Poller
+    
+    - MySQL server
+    
+    - Apache
+    
+    - Mongrels

@@ -146,7 +146,7 @@ function uploadSuccess(file, serverData) {
 		window.swfu.debug(ex);
 	}
 	file.upload_id = window.uploadIdentifierLookup[file.id];
-	new Ajax.Request('/upload/file_finished?' + Object.toQueryString(file), {
+	new Ajax.Request('/upload/file_sent?' + Object.toQueryString(file), {
 		method:'get',
 		asynchronous: false,
 		onSuccess: function(){

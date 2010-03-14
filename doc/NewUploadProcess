@@ -5,7 +5,7 @@ MODEL FLAGS
 
     is_uploaded
 
-    DEPRICATED is_published (set to true after thumbnails have been generated)
+    show_in_publish_form (defaults to true, we'll set it to false after collection for the publish view)
     
     Instead, we'll just display a default thumbnail for the games that don't have them yet
     
@@ -22,7 +22,7 @@ UPLOAD
 
     Generates Thumbnails
 
-        Two different options
+        Two different options:
 
         The EC2 instance inserts the appropriate rows into the DB (marking the game as finished, creating thumbnail objects)
     
@@ -39,10 +39,11 @@ PUBLISHING
     
     All games that are uploaded but not published are collected
     
-    Iterate over collection, showing edit forms for each file object
+    Set is_published to true on all game objects - save objects
+    
+    Iterate over collection showing edit forms for each file object
     
     On submit, update fields
     
-    NOTE: "is_published" is actually set by the ActiveMessaging poller, NOT the user's "publish" flow
+    (If a user skips the "publish" step, their content will still be publicly available)
     
-    (If a user skips the "publish" step, their content should still be publicly available.)

@@ -1,0 +1,67 @@
+Documentation of the process I used for EC2.
+
+Following the guide here:
+
+http://docs.amazonwebservices.com/AmazonEC2/gsg/2006-06-26/
+
+
+Generated and downloaded a new X509 Certificate and the private key file.
+
+Noted account number: 3731-2819-1786 (without hyphens that's your EC2 User ID)
+
+Wrote "set_environment" script in surferbreak/ec2/tools, which needs to be run before working with the tools.
+
+Going to be using an Ubuntu image preloaded with the Rails stack. That's what I'm using on the rimuVPS and it's a common distro.
+
+Using a small instance. Since this isn't a database I'm not worried about amount of memory. 32-bit Ubuntu 9.10, US-West:
+
+Image: http://developer.amazonwebservices.com/connect/entry.jspa?externalID=2754
+
+AMI ID: ami-c32e7f86
+
+Added a keypair for the CALIFORNIA REGION ("ec2-add-keypair --region us-west-1 gsg-keypair")
+
+Pasted the middle of the outputted value into id_rsa-gsg-keypair
+
+Started the EC2 image ("ec2-run-instances ami-c32e7f86 --instance-type m1.small --region us-west-1 -k gsg-keypair" in tools/)
+
+Instance id: i-4bc4c90e
+
+Checked the instance status: ec2-describe-instances --region us-west-1 i-4bc4c90e
+
+Authorized network access ("ec2-authorize --region us-west-1 default -p 22" only for ssh)
+
+Connected with SSH ("ssh -i id_rsa-gsg-keypair ubuntu@ec2-184-72-3-59.us-west-1.compute.amazonaws.com")
+
+Celebrated! TV break.
+
+Copied the private key (pk-*) to the image ("scp -i id_rsa-gsg-keypair .keys/pk-SEX6FSNZULVNBU7OFWREU2WQ7TQITNSV.pem ubuntu@ec2-184-72-3-59.us-west-1.compute.amazonaws.com:" the trailing ":" is required)
+
+Saved the image as a custom AMI (In the running instance: "ec2-bundle-vol -d /mnt -k ~root/pk-SEX6FSNZULVNBU7OFWREU2WQ7TQITNSV.pem -u 373128191786 -s 2048" This gives the image 2GB of space)
+
+
+
+On Karmic (Ubuntu 9.10):
+
+Shell into "ubuntu," not "root." Use sudo to perform commands as root.
+
+
+
+USING EC2 TOOLS
+
+    cd ~/Code/surferbreak/ec2/tools
+    . set_environment.sh
+    
+
+SETTING UP SERVER IMAGE
+
+    sudo aptitude update
+    sudo aptitude install rubygems1.8
+    sudo aptitude install git-core
+    sudo gem install rails
+    sudo gem install activemessaging
+    
+    
+    
+
+
