@@ -20,7 +20,7 @@ class UpdatePathColumns < ActiveRecord::Migration
     
     change_table :thumbnails do |t|
       t.rename  :path, :storage_object_id
-      t.string  :original_filename
+      t.string  :original_filename  # Will be null for generated thumbnails
     end
     
     

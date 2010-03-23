@@ -2,8 +2,9 @@ class UploadController < ApplicationController
   
   before_filter :require_user, :only => [:show]
   
+  
   # Flow for two files:
-  # show -> get_key -> file_finished -> get_key -> file_finished -> publish
+  # show -> get_key -> file_sent -> get_key -> file_sent -> publish
   
   # For each file the user hits get_key, which returns the policy file and the S3 key which acts as an upload receipt
   # For each finished upload the user hits file_finished, which verifies ownership and sets is_uploaded to true
@@ -21,7 +22,7 @@ class UploadController < ApplicationController
   
   
   def show
-    @upload_url = "http://#{S3Keys::S3Config.bucket}.s3.amazonaws.com/"
+    @upload_url = Game.s3_bucket_path
   end
   
   
@@ -61,7 +62,7 @@ class UploadController < ApplicationController
       "{'expiration': '#{expiration_date}',
         'conditions': [
           {'bucket': '#{bucket}'},
-          {'key': 'uploads/#{unique_key}'},
+          {'key': '#{Game.s3_directory}/#{unique_key}'},
           {'acl': '#{acl}'},
           {'success_action_status': '201'},
           ['starts-with', '$Filename', ''],
@@ -75,7 +76,7 @@ class UploadController < ApplicationController
                     secret_access_key, policy)).gsub("\n","")
     
     @post_params = {
-      "key" => "uploads/#{unique_key}",
+      "key" => "#{Game.s3_directory}/#{unique_key}",
       "AWSAccessKeyId" => "#{access_key_id}",
       "acl" => "#{acl}",
       "policy" => "#{policy}",
@@ -123,10 +124,8 @@ class UploadController < ApplicationController
   end
   
   
+  
   def file_sent     # Successfully uploaded a file to S3
-    
-    # Early exits below
-    
     # Required params
     if params[:upload_id].nil? or params[:name].nil?
       flash[:notice] = "Invalid parameters"
@@ -142,14 +141,15 @@ class UploadController < ApplicationController
       return
     end
     
-    # End prereq
+    @game.is_uploaded = true  # Model handles thumbnail generation
     
-    
-    # Enqueue SQS job
-    # TODO here
-    
-    render :json => { "success" => true }.to_json
+    if @game.save
+      render :json => { "success" => true }.to_json
+    else
+      render :json => { "success" => false }.to_json, :status => 401
+    end
   end
+  
   
   
   def old_file_finished
@@ -183,10 +183,10 @@ class UploadController < ApplicationController
     @game.is_uploaded = true
     
     # Thumbnail Paths
-    remote_rom_path         = "http://#{S3Keys::S3Config.bucket}.s3.amazonaws.com/uploads/" + @game.storage_object_id
-    local_rom_path          = "#{RAILS_ROOT}/tmp/roms/#{@game.storage_object_id}"
-    local_screenshot_dir    = "#{RAILS_ROOT}/tmp/screenshots/#{@game.storage_object_id}"
-    local_screenshot_prefix = "#{local_screenshot_dir}/#{@game.storage_object_id}"
+    # remote_rom_path         = "http://#{S3Keys::S3Config.bucket}.s3.amazonaws.com/uploads/" + @game.storage_object_id
+    # local_rom_path          = "#{RAILS_ROOT}/tmp/roms/#{@game.storage_object_id}"
+    # local_screenshot_dir    = "#{RAILS_ROOT}/tmp/screenshots/#{@game.storage_object_id}"
+    # local_screenshot_prefix = "#{local_screenshot_dir}/#{@game.storage_object_id}"
     
     # Create necessary directories
     Dir.mkdir(local_screenshot_dir) unless File.exists?(local_screenshot_dir)
@@ -250,9 +250,6 @@ class UploadController < ApplicationController
         end
       end
     end
-    
-    @game.generated_thumbs = true # Mark that we've at least *tried* to generate thumbnails
-    
     
     # Cleanup:
     # Screenshot directory

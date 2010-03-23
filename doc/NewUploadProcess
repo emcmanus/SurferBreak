@@ -1,6 +1,17 @@
 New Upload Process
 
 
+AMAZON SQS
+
+    I originally built the upload process to use ActiveMessaging as an interface for SQS
+    
+    However, after a few hours of frustration deciede to ditch ActiveMessaging for RightScale's AWS gem.
+    
+    The ActiveMessaging gem was out of date for the edge Rails version, and the repository on Google Code wasn't active.
+
+    RightScale's gem seems to be have better support.
+    
+
 MODEL FLAGS
 
     is_uploaded

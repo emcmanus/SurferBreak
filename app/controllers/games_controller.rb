@@ -9,6 +9,7 @@ class GamesController < ApplicationController
   # GET /games/1
   def show
     @game = Game.find(params[:id])
+    @thumbnails = Thumbnail.find_all_by_game_id(params[:id])
   end
   
 
@@ -21,6 +22,7 @@ class GamesController < ApplicationController
   # GET /games/1/edit
   def edit
     @game = Game.find(params[:id])
+    @thumbnails = Thumbnail.find_all_by_game_id(@game)
   end
 
 

@@ -1,0 +1,67 @@
+Example ROM:
+
+http://surferbreak-development.s3.amazonaws.com/uploads/bd8aab2e2ad73d703768001236141fba
+
+
+
+Example Job:
+
+{
+    "meta" => {
+        "api_version"   => 1,
+        "job_type"      => "thumbnail_generation",
+        "passthru"      => {
+                            "game_id" => "14"
+                        }
+    },
+    "source" => {
+        "bucket"        => "surferbreak-development",
+        "directory"     => "uploads",
+        "storage_id"    => "bd8aab2e2ad73d703768001236141fba"
+    },
+    "destination" => {
+        "bucket"        => "surferbreak-development",
+        "directory"     => "screenshots",
+        "storage_id_prefix" => "bd8aab2e2ad73d703768001236141fba-"
+    }
+}
+        
+        
+
+Example Receipt:
+
+{
+    "meta" => {
+        "api_version"   => 1,
+        "job_type"      => "thumbnail_generation",
+        "success"       => true,
+        "error_message" => "",
+        "passthru"      => {
+                            ... Same fields specified in the job ...
+                        }
+    },
+    "screenshots" => {
+        "width"         => 256,
+        "height"        => 224,
+        "platform"      => "SNES",
+        "bucket"        => "surferbreak-development",
+        "directory"     => "screenshots"
+        "default"       => "bd8aab2e2ad73d703768001236141fba-00008.png"
+        "storage_ids"   => [
+                "bd8aab2e2ad73d703768001236141fba-00001.png",
+                "bd8aab2e2ad73d703768001236141fba-00002.png",
+                "bd8aab2e2ad73d703768001236141fba-00003.png",
+                ...
+                "bd8aab2e2ad73d703768001236141fba-00019.png"
+        ]
+    }
+}
+
+
+Generated Screenshots:
+
+"surferbreak-development.s3.amazonaws.com/screenshots/bd8aab2e2ad73d703768001236141fba-00001.png"
+"surferbreak-development.s3.amazonaws.com/screenshots/bd8aab2e2ad73d703768001236141fba-00002.png"
+"surferbreak-development.s3.amazonaws.com/screenshots/bd8aab2e2ad73d703768001236141fba-00003.png"
+...
+"surferbreak-development.s3.amazonaws.com/screenshots/bd8aab2e2ad73d703768001236141fba-00019.png"

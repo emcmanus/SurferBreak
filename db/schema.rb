@@ -21,24 +21,24 @@ ActiveRecord::Schema.define(:version => 20100305132905) do
   end
 
   create_table "games", :force => true do |t|
-    t.float    "avg_rating",        :default => 0.0
-    t.integer  "num_ratings",       :default => 0
-    t.float    "ranked_value",      :default => 0.0
-    t.boolean  "deleted",           :default => false
-    t.integer  "play_count",        :default => 0
-    t.boolean  "removed",           :default => false
-    t.string   "platform",          :default => "NES", :null => false
-    t.string   "storage_object_id",                    :null => false
+    t.float    "avg_rating",           :default => 0.0
+    t.integer  "num_ratings",          :default => 0
+    t.float    "ranked_value",         :default => 0.0
+    t.boolean  "deleted",              :default => false
+    t.integer  "play_count",           :default => 0
+    t.boolean  "removed",              :default => false
+    t.string   "platform",             :default => "NES", :null => false
+    t.string   "storage_object_id",                       :null => false
     t.text     "description"
     t.string   "title"
-    t.boolean  "is_adult",          :default => false
+    t.boolean  "is_adult",             :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "thumbnail_id"
     t.string   "original_filename"
-    t.boolean  "is_uploaded",       :default => false
-    t.boolean  "generated_thumbs",  :default => false
+    t.boolean  "is_uploaded",          :default => false
+    t.boolean  "show_in_publish_form", :default => true
   end
 
   add_index "games", ["storage_object_id"], :name => "index_games_on_storage_object_id"

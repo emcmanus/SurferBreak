@@ -1,0 +1,25 @@
+Create a whiteboard ROM, then allow users to upload and send screenshots to others.
+
+ - Users will have a library of screenshots that they can attach to messages, games, profiles, etc.
+ - Site design
+ - Multiplayer
+ - Comments
+ - Profile Picture
+ - Profile picture - webcam integration
+ - Simple photo annotation widget -- allows you to circle, draw, and write on pictures
+ - Screenshots
+ - Attach screenshots to messages, profiles, etc.
+ - Facebook connect
+ - Integrate NES support
+ - NES screenshot grabber
+ - Fix SNES sound driver
+ - SNES preloader
+ - Talk to Zynga, Playdom etc. about PPI
+ - Search
+
+
+for now:
+
+- comments
+- rating
+

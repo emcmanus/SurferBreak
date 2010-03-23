@@ -1,6 +1,8 @@
 Deploy Sanity Check:
 
-    - ActiveMessaging Poller
+    - SQS Pollers (MAKE SURE TO START WITH THE CORRECT ENVIRONMENT):
+        + 1 instance running on the main HTTP server
+        + 1 instance running on each EC2 node
     
     - MySQL server
     

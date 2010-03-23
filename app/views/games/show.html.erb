@@ -33,11 +33,17 @@
 
 <h3> <span class="highlight"> Screenshots </span></h3>
 
-<% (0...20).each do |i| %>
-    <% if i < 10 %>
-        <img height="112" width="128" src="http://localhost/test_rom_screenshots/snes/<%= @game.original_filename %>/<%= @game.original_filename %>_0000<%= i.to_s %>.png">
-    <% else %>
-        <img height="112" width="128" src="http://localhost/test_rom_screenshots/snes/<%= @game.original_filename %>/<%= @game.original_filename %>_000<%= i.to_s %>.png">
+<% for thumb in @thumbnails %>
+    <%= image_tag thumb.s3_path, :width => 128, :height => 112 %>
+<% end %>
+
+<% if reference_local=false %>
+    <% (0...20).each do |i| %>
+        <% if i < 10 %>
+            <img height="112" width="128" src="http://localhost/test_rom_screenshots/snes/<%= @game.original_filename %>/<%= @game.original_filename %>_0000<%= i.to_s %>.png">
+        <% else %>
+            <img height="112" width="128" src="http://localhost/test_rom_screenshots/snes/<%= @game.original_filename %>/<%= @game.original_filename %>_000<%= i.to_s %>.png">
+        <% end %>
     <% end %>
 <% end %>
 

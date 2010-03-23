@@ -1,8 +1,13 @@
 <div style="padding: 5px 5px; background-color: #000;">
     <% if not @game.thumbnail.nil? %>
-        <%= link_to image_tag("http://#{S3Keys::S3Config.bucket}.s3.amazonaws.com/screenshots/#{@game.thumbnail.storage_object_id}", :border=>0, :width=>221, :height=>192), @game %>
+        <% if @remote=true %>
+            <%= link_to image_tag("http://#{S3Keys::S3Config.bucket}.s3.amazonaws.com/#{Thumbnail.s3_directory}/#{@game.thumbnail.storage_object_id}", :border=>0, :width=>221, :height=>192), @game %>
+        <% else %>
+            <img height="112" width="128" src="http://localhost/test_rom_screenshots/snes/<%= @game.original_filename %>/<%= @game.original_filename %>_000016.png">
+        <% end %>
     <% else %>
-        <span style="color:#fff;">Default thumb</span>
+        <%= link_to image_tag("/images/thumbnails/snes_generic.png", :border=>0, :width=>221, :height=>192), @game %>
     <% end %>
 </div>
 <span style="font-weight: bold;"><%= truncate link_to( @game.title, @game ), :length => 80 %></span>
+<!-- TODO - should make s3_directory a value stored in the object. If necessary later, we can have multiple thumbnail directories. -->

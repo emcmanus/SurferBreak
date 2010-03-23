@@ -1,6 +1,6 @@
 <h2>Edit Game</h2>
 
-<div class="span-16" style="padding: 15px; border: 1px solid #ededed; margin: 5px 0;">
+<div class="span-15" style="padding: 15px; border: 1px solid #ededed; margin: 5px 0;">
     
     <h3><span class="highlight"> General </span></h3>
     
@@ -24,14 +24,49 @@
     <br/>
     
     
-    <h3><span class="highlight"> Thumbnails </span></h3>
+    <h3><span class="highlight"> Thumbnail </span></h3>
     
-    <%= f.label "Default Thumbnail:" %>
+    <% content_for :head do %>
+        <style type="text/css">
+            .thumb {
+                margin: 3px;
+            }
+            .thumb:hover {
+                margin: 0;
+                border: 3px solid blue;
+                cursor: pointer;
+            }
+            .thumb.default {
+                margin: 0;
+                border: 3px solid red;
+            }
+            .thumb.default:hover {
+                cursor: default;
+            }
+        </style>
+    <% end %>
     
+    <div class="span-7">
+        <%= f.label "Default Thumbnail:" %><br/>
+        <%= image_tag @game.thumbnail.s3_path %>
+    </div>
+    
+    <div class="span-8 last">
+        <%= f.label "Options:" %><br/>
+        <% @thumbnails.each do | thumb | %>
+            <% if thumb == @game.thumbnail %>
+                <%= image_tag thumb.s3_path, :width => 128, :height => 112, :class=>"thumb default" %>
+            <% else %>
+                <%= image_tag thumb.s3_path, :width => 128, :height => 112, :class=>"thumb" %>
+            <% end %>
+        <% end %>
+    </div>
     
     <div >
     
-    <br />
+    <hr class="space" />
+    <hr />
+    
     <%= f.submit 'Update' %>
 
     <% end %>
