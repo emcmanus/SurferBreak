@@ -15,6 +15,15 @@ require 'active_record'
 require 'yaml'
 require 'json'
 require 'right_aws'
+require 'daemons'
+
+
+if ARGV[0] == "debug"
+  puts "Starting in debug mode"
+else
+  puts "Starting daemon..."
+  Daemons.daemonize
+end
 
 
 # Constants
@@ -24,7 +33,7 @@ JOB_TYPE          = "thumbnail_generation"
 
 # TODO
 puts "\n\n\n"
-puts "NOTE: BE SURE TO HANDLE THE ENVIRONMENT!!! RIGHT NOW IT'S HARD-CODED TO DEVELOPMENT."
+puts "NOTE: BE SURE TO HANDLE THE ENVIRONMENT!!! RIGHT NOW IT'S HARD-CODED TO PRODUCTION."
 puts "\n\n\n"
 
 require "../config/environment"
