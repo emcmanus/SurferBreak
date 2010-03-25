@@ -10,7 +10,7 @@ SANITY:
 
 STAGING:
     
-    ssh root@72.249.83.132
+    ssh root@72.249.83.132 (or ssh root@surferbreak.com)
     cd /var/www/surferbreak
     git pull
     export RAILS_ENV=production
