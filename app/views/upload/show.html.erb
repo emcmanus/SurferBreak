@@ -92,7 +92,7 @@
 		    <span id="spanButtonPlaceHolder"></span>
 		    <input id="btnCancel" type="button" value="Cancel All Uploads" onclick="swfu.cancelQueue();" disabled="disabled" />
     	    <br/><br/>
-    		<%= link_to "Publish!", :controller => "upload", :action => "publish" %>
+    		<%= link_to "Publish!", {:controller => "upload", :action => "publish"}, :style => 'display: none;', :id => 'publishBtn' %>
     	</div>
     </form>
 </div>
