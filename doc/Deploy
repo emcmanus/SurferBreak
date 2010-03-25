@@ -1,11 +1,24 @@
-Deploy Sanity Check:
-
+SANITY:
+    
     - SQS Pollers (MAKE SURE TO START WITH THE CORRECT ENVIRONMENT):
         + 1 instance running on the main HTTP server
         + 1 instance running on each EC2 node
-    
     - MySQL server
-    
     - Apache
-    
     - Mongrels
+
+
+STAGING:
+    
+    ssh root@72.249.83.132
+    cd /var/www/surferbreak
+    git pull
+    export RAILS_ENV=production
+    rake db:migrate
+    mongrel_rails cluster::restart
+    /etc/init.d/apache2 restart
+    
+    
+PRODUCTION:
+    
+    

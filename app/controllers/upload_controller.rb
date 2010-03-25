@@ -40,7 +40,7 @@ class UploadController < ApplicationController
     @error = false
     @error_message = ""
     
-    if current_user.nil?
+    if current_user.nil? or current_user.id.nil?
       @error = true
       @error_message = "Must log in."
     end
@@ -51,10 +51,10 @@ class UploadController < ApplicationController
     
     require 'digest/md5'
     
-    # We'll use the user's session key to generate the S3 object key
-    unique_key      = Digest::MD5.hexdigest( current_user.perishable_token + current_user.single_access_token ) # Auth required to hit this action
-    acl             = 'public-read'
+    # Use the user's session key to generate the S3 object key
     expiration_date = 10.hours.from_now.utc.strftime('%Y-%m-%dT%H:%M:%S.000Z')
+    unique_key      = Digest::MD5.hexdigest( current_user.id + ("%10.6f" % Time.now.to_f) ) # Auth required to hit this action
+    acl             = 'public-read'
     max_filesize    = 25.megabyte
     
     

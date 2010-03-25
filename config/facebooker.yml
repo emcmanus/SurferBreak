@@ -1,0 +1,21 @@
+development:
+ api_key: 63a9c09735828be943cabc073aa8613b
+ secret_key: 459a125cf5920577c6e1b19c77242858
+ canvas_page_name: SurferBreak-development
+ callback_url: http://localhost:3000
+ pretty_errors: true
+ set_asset_host_to_callback_url: true
+     
+test:
+  api_key:
+  secret_key:
+  canvas_page_name:
+  pretty_errors: true
+  set_asset_host_to_callback_url: true
+    
+production:
+  api_key: cc7c49bcca45e9c9bed3aa85bac93c4b
+  secret_key: 5018c3b0a648a6c117196474388a14da
+  canvas_page_name: SurferBreak
+  pretty_errors: true
+  set_asset_host_to_callback_url: true

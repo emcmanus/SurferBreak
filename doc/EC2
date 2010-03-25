@@ -17,13 +17,29 @@ AMI ADDITIONS
 
     sudo aptitude update
     sudo aptitude install rubygems1.8
+    sudo aptitude install ruby1.8-dev
     sudo aptitude install git-core
     sudo gem install rails
     sudo gem install yaml json right_aws curb timeout
     Add multiverse repositories (https://help.ubuntu.com/community/Repositories/CommandLine)
     sudo aptitude update
     sudo aptitude install ec2-ami-tools
+    generated SSH key (ssh-keygen -t rsa -C "emcmanus@gmail.com")
+    added SSH key to github repository
+    checked out surferbreak-ec2 and flashsnes-screengrabber to /home/ubuntu/surferbreak
+    Added time sync chron job (https://help.ubuntu.com/community/UbuntuTime)
+    sudo aptitude install g++
+    
+    STILL TO DO
+    Built new screen_grabber binary and modified poller (in src: make -f Makefile.headless clean all;)
 
+
+DEPLOYS
+    
+    (in surferbreak):
+    git pull
+    restart poller
+    build screen_grabber if necessary
 
 
 SETUP

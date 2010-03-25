@@ -1,4 +1,4 @@
-Required Gems:
+REQUIRED GEMS:
 
     authlogic
     
@@ -6,6 +6,14 @@ Required Gems:
     
 
 
-Install the required gems if they aren't installed already
+INSTALLING GEMS:
 
-sudo rake gems:install
+    Install the required gems if they aren't installed already
+
+    sudo rake gems:install
+
+
+
+START RDOC
+
+    gem server

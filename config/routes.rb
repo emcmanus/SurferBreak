@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource  :game,        :controller => "games"
   
   # User profiles
-  map.user      "users/:id",  :controller => "users", :action => "showPublicProfile"
+  map.user      "users/:id",  :controller => "users", :action => "show"
   
   # List
   map.list      "list",       :controller => "list",  :action => "show"
@@ -28,7 +28,6 @@ ActionController::Routing::Routes.draw do |map|
   
   # Home
   map.root      :controller => "home",  :action => "show"
-  
   
   # Your Stuff
   # map.account             "account",                  :controller => ""

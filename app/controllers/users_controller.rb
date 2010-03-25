@@ -5,12 +5,6 @@ class UsersController < ApplicationController
   before_filter :require_user, :only => [:show, :edit, :update] # "My Profile" Actions
   
   
-  def showPublicProfile
-    @user = User.find(params[:id])
-    render :action => :show
-  end
-  
-  
   def new
     @user = User.new
   end
@@ -28,7 +22,12 @@ class UsersController < ApplicationController
   
   
   def show
-    @user = @current_user
+    if params[:id].nil?
+      @user = @current_user
+    else
+      @user = User.find(params[:id])
+    end
+    @facebook_session = facebook_session
   end
   
   

@@ -6,7 +6,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
   helper_method :current_user_session, :current_user
+  
   filter_parameter_logging :password, :password_confirmation
+  filter_parameter_logging :fb_sig_friends
+  
+  # ensure_application_is_installed_by_facebook_user
   
   private
     def current_user_session
