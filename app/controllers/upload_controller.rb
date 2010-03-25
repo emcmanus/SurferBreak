@@ -53,7 +53,7 @@ class UploadController < ApplicationController
     
     # Use the user's session key to generate the S3 object key
     expiration_date = 10.hours.from_now.utc.strftime('%Y-%m-%dT%H:%M:%S.000Z')
-    unique_key      = Digest::MD5.hexdigest( current_user.id + ("%10.6f" % Time.now.to_f) ) # Auth required to hit this action
+    unique_key      = Digest::MD5.hexdigest( current_user.id.to_s + ("%10.6f" % Time.now.to_f) ) # Auth required to hit this action
     acl             = 'public-read'
     max_filesize    = 25.megabyte
     
