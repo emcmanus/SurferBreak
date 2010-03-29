@@ -10,11 +10,7 @@
 
 
 <h2>
-    <%  if not @user.name.nil? and not @user.name.empty?  %>
-        <%= @user.name %>
-    <% else %>
-        <%= @user.login %>
-    <% end %>
+    <%= @user.display_name || "User Profile" %>
     
     <% if current_user == @user %>
         <%= link_to '(Edit)', edit_account_path, {:class=>"title_link"} %>
@@ -22,14 +18,39 @@
 </h2>
 
 <div style="padding: 15px; border: 1px solid #ccc;" class="span-12">
-    <h3> <span class="highlight">Games</span> <span class="parenthetical">(<%= @user.games.count %>)</span></h3>
+    <h3> <span class="highlight">Awards</span> <span class="parenthetical">(<%= @user.user_reward.count_rewards %>)</span></h3>
+    
+    <p><strong>Bug cookies</strong> <%= link_to '(?)', "#", {:class=>"title_link"} %>:
+        <!-- Beta rewards -->
+        <% (1..@user.user_reward.num_bug_cookies_visible).each do %>
+            <%= image_tag '/images/icons/unsorted/medium-cookie-bite.png' %>
+        <% end %>
+    </p>
+    
+    <p><strong>Hidden awards</strong> <%= link_to '(?)', "#", {:class=>"title_link"} %>:
+        <!-- Mystery rewards -->
+        <% (1..@user.user_reward.count_hidden_rewards).each do %>
+            <%= image_tag '/images/icons/unsorted/medium-trophy.png' %>
+        <% end %>
+    </p>
+
+    <hr />
+    
+    <h3>
+        <span class="highlight">Games</span>
+        <span class="parenthetical">(<%= @user.games.count %>)</span>
+    </h3>
 
     <p>
-        <ul>
-        <% @user.games.each do |game| %>
-            <li><%= link_to game.title, game %></li>
+        <% if @user.games.length == 0 %>
+            <%= link_to "Upload games!", upload_path %>
+        <% else %>
+            <ul>
+                <% @user.games.each do |game| %>
+                    <li><%= link_to game.title, game %></li>
+                <% end %>
+            </ul>
         <% end %>
-        </ul>
     </p>
 
     <hr />
@@ -38,14 +59,14 @@
 
     <p>
         <b>Username:</b>
-        <%= @user.login %>
+        <%= @user.safe_get :username %>
     </p>
 
     <p>
         <b>About:</b>
         <% if current_user == @user %>
-            <% if not @user.about.nil? and not @user.about.empty? %>
-                <%= @user.about %>
+            <% unless @user.safe_get(:about).blank? %>
+                <%= @user.safe_get :about %>
             <% else %>
                 <%= link_to "Add content", edit_account_path %>
             <% end %>

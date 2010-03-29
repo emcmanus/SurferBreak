@@ -19,11 +19,7 @@
     <ul>
         <% @users.each do |user| %>
             <li><h5 style="margin-bottom: 3px;">
-                <% if not user.name.nil? and not user.name.empty? %>
-                    <b><%= user.name %></b> (<%= link_to user.login, user %>)
-                <% else %>
-                    <b><%= user.login %></b> (<%= link_to "view profile", user %>)
-                <% end %>
+                <b><%= user.display_name || "user #{user.id}" %></b> (<%= link_to user.display_name || "profile", user %>)
             </h5>
         
             Created <%= time_ago_in_words user.created_at %> ago<br />

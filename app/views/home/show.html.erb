@@ -1,6 +1,5 @@
 <h2> Home </h2>
 
-
 <div class="span-24" style="margin-bottom: 50px;">
     
     <div class="span-8">
@@ -31,12 +30,12 @@
         <h3> <span class="highlight"> New Users </span></h3>
 
         <% @new_users.each do |user| %>
-            <%= user.login %>, Created <%= time_ago_in_words user.created_at %> ago <br/>
+            <%= link_to user.display_name || "User #{user.id}", user %>, Created <%= time_ago_in_words user.created_at %> ago <br/>
         <% end %>
     </div>
 
     <div class="span-12 last">
-        <h3> <span class="highlight"> Recent Ratings </span></h3>
+        <h3> <span class="highlight"> Recent Activity </span></h3>
 
         <% @new_ratings.each do |rating| %>
             <%= rating.rating %><br/>

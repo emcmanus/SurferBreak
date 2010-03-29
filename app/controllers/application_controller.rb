@@ -2,17 +2,28 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  helper :all # include all helpers, all the time
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  helper :all # include all helper classes
+  protect_from_forgery
+  
+  # Require facebook connect for ALL pages
+  before_filter :require_connected_user
   
   helper_method :current_user_session, :current_user
   
+  # Log filtering
   filter_parameter_logging :password, :password_confirmation
   filter_parameter_logging :fb_sig_friends
   
-  # ensure_application_is_installed_by_facebook_user
-  
   private
+    # Require Facebook Connect
+    def require_connected_user
+      unless current_user or self.controller_name == "user_sessions"
+        store_location
+        flash[:notice] = "Please sign in first!"
+        redirect_to login_path
+      end
+    end
+    
     def current_user_session
       return @current_user_session if defined?(@current_user_session)
       @current_user_session = UserSession.find
@@ -20,25 +31,7 @@ class ApplicationController < ActionController::Base
     
     def current_user
       return @current_user if defined?(@current_user)
-      @current_user = current_user_session && current_user_session.record
-    end
-    
-    def require_user
-      unless current_user
-        store_location
-        flash[:notice] = "You must be logged in to access this page"
-        redirect_to new_user_session_url
-        return false
-      end
-    end
- 
-    def require_no_user
-      if current_user
-        store_location
-        flash[:notice] = "You must be logged out to access this page"
-        redirect_to account_url
-        return false
-      end
+      @current_user = current_user_session && current_user_session.user
     end
     
     def store_location

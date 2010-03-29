@@ -1,10 +1,10 @@
-class AddFieldsToUser < ActiveRecord::Migration
+class AddProfileFieldsToUser < ActiveRecord::Migration
   def self.up
     change_table :users do |t|
-      t.text :about
-      t.string :photo # S3 Object ID
-      t.string :name
-      t.date :expiration
+      t.text    :about
+      t.string  :photo # S3 Object ID
+      t.string  :name
+      t.date    :expiration
     end
   end
 

@@ -28,7 +28,7 @@
     
 <div class="container" id="global-container">
    
-  <h1><%= link_to "Tech", root_url, {:style => 'color: black;'} %></h1>
+  <h1><%= link_to "SurferBreak", root_url, {:style => 'color: black;'} %></h1>
   
   <div class="span-24" id="header">
     <div class="span-20">
@@ -43,12 +43,9 @@
     </div>
   
     <div class="span-4 last" style="padding-top: 3px; text-align: right;">
-      <% if !current_user %>
-        <%= link_to "register", register_path %><span style="padding: 0 4px;"> | </span>
-        <%= link_to "log in", login_path %>
-      <% else %>
-        <%= link_to current_user.login, account_path %><span style="padding: 0 4px;"> | </span>
-        <%= link_to "log out", logout_path %>
+      <% if current_user %>
+        <%= link_to current_user.display_name || "your account", account_path %><span style="padding: 0 4px;"> | </span>
+        <%= fb_logout_link "logout", logout_path %>
       <% end %>
     </div>
   </div>

@@ -9,7 +9,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100305132905) do
+ActiveRecord::Schema.define(:version => 20100327135547) do
+
+  create_table "facebook_caches", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "invalidates_at"
+    t.string   "name"
+    t.string   "email"
+    t.string   "username"
+    t.text     "about_me"
+    t.string   "profile_url"
+    t.string   "sex"
+    t.string   "website"
+    t.text     "status_message"
+    t.datetime "status_time"
+    t.string   "pic"
+    t.string   "pic_with_logo"
+    t.string   "pic_big"
+    t.string   "pic_big_with_logo"
+    t.string   "pic_small"
+    t.string   "pic_small_with_logo"
+    t.string   "pic_square"
+    t.string   "pic_square_with_logo"
+  end
 
   create_table "feedbacks", :force => true do |t|
     t.string   "email"
@@ -69,31 +92,45 @@ ActiveRecord::Schema.define(:version => 20100305132905) do
     t.integer "height",            :null => false
   end
 
+  create_table "user_rewards", :force => true do |t|
+    t.integer "num_bug_cookies_hidden",      :default => 0
+    t.integer "num_bug_cookies_visible",     :default => 0
+    t.integer "num_users_recruited_hidden",  :default => 0
+    t.integer "num_users_recruited_visible", :default => 0
+  end
+
   create_table "users", :force => true do |t|
-    t.string   "login",                              :null => false
-    t.string   "email",                              :null => false
-    t.string   "crypted_password",                   :null => false
-    t.string   "password_salt",                      :null => false
-    t.string   "persistence_token",                  :null => false
-    t.string   "single_access_token",                :null => false
-    t.string   "perishable_token",                   :null => false
-    t.integer  "login_count",         :default => 0, :null => false
-    t.integer  "failed_login_count",  :default => 0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "username"
+    t.string   "email"
+    t.string   "crypted_password"
+    t.string   "password_salt"
+    t.string   "persistence_token"
+    t.string   "single_access_token"
+    t.string   "perishable_token"
+    t.integer  "login_count",          :default => 0,     :null => false
+    t.integer  "failed_login_count",   :default => 0,     :null => false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
     t.string   "current_login_ip"
     t.string   "last_login_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string   "facebook_id"
+    t.string   "facebook_session_key"
+    t.boolean  "facebook_new_user",    :default => false, :null => false
     t.text     "about"
     t.string   "name"
     t.date     "expiration"
     t.integer  "userPhoto_id"
+    t.integer  "facebook_cache_id"
+    t.integer  "user_reward_id"
   end
 
+  add_index "users", ["facebook_id"], :name => "index_users_on_facebook_id"
+  add_index "users", ["facebook_session_key"], :name => "index_users_on_facebook_session_key"
   add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
-  add_index "users", ["login"], :name => "index_users_on_login"
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
+  add_index "users", ["username"], :name => "index_users_on_username"
 
 end

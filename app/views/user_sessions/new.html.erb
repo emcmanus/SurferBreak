@@ -1,14 +1,78 @@
-<h2>Log In <%= link_to "(Or Register)", register_path, :class => "title_link" %></h2>
 
-<% form_for @user_session, :url => user_session_path do |f| %>
-  <%= f.error_messages %>
-  <%= f.label :login %><br />
-  <%= f.text_field :login %><br />
-  <br />
-  <%= f.label :password %><br />
-  <%= f.password_field :password %><br />
-  <br />
-  <%= f.check_box :remember_me %><%= f.label :remember_me %><br />
-  <br />
-  <%= f.submit "Login" %>
+<div class="container" id="global-container">
+    
+    <h2>Log in with Facebook Connect</h2>
+    
+    <div id="logged_in" class="span-24">
+        <%= authlogic_facebook_login_button :length => 'long' %>
+    </div>
+    
+    <hr class="space" />
+    
+    <div class="span-10" style="border: 1px solid #ccc; padding: 20px;">
+        <h3><span class="highlight">Why Connect?</span></h3>
+        <ul>
+            <li><b>Free</b> homebrew NES and SNES games</li>
+        </ul>
+    </div>
+    
+    <hr class="space" />
+    
+    <div class="span-10" style="border: 1px solid #ccc; padding: 20px;">
+        <h3><span class="highlight">How Will You Use my Account?</span></h3>
+            <hr />
+            We will <b>NEVER:</b>
+            <ul>
+                <li>Push anything to Facebook without asking first (e.g. status updates, invitations, etc.)</li>
+                <li>Send emails or gifts without your explicit permission</li>
+            </ul>
+            <hr />
+            We will:
+            <ul>
+                <li>Respect your privacy</li>
+                <li>Email you if our user policy changes</li>
+            </ul>
+    </div>
+    
+    
+    
+    <hr class="space" />
+    
+    <h6>Plans for this page</h6>
+    
+    <p>
+        Once you've authenticated, the lightbox remains but the content changes to be similar to what you see on Facebook when you first create an account.
+    </p>
+    
+    <ul>
+        <li>Add/take profile photo</li>
+        <li>Tell us about yourself</li>
+        <li>Friends on the network</li>
+        <li>Invite friends (all checked by default?)</li>
+    </ul>
+    
+    <p>
+        Use the same strategy as MetroGames
+    </p>
+    
+</div>
+
+
+
+<% if false %>
+    <!-- Old Login -->
+
+    <% form_for @user_session, :url => user_session_path do |f| %>
+      <%= f.error_messages %>
+      <%= f.label :username %><br />
+      <%= f.text_field :username %><br />
+      <br />
+      <%= f.label :password %><br />
+      <%= f.password_field :password %><br />
+      <br />
+      <%= f.check_box :remember_me %><%= f.label :remember_me %><br />
+      <br />
+      <%= f.submit "Login" %>
+    <% end %>
+
 <% end %>

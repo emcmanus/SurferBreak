@@ -12,7 +12,6 @@ class HomeController < ApplicationController
     
     # Recent Ratings
     @new_ratings = Rating.all(:order => "created_at DESC", :limit => 10)
-    
   end
   
 end
