@@ -11,29 +11,6 @@
 
 ActiveRecord::Schema.define(:version => 20100327135547) do
 
-  create_table "facebook_caches", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "invalidates_at"
-    t.string   "name"
-    t.string   "email"
-    t.string   "username"
-    t.text     "about_me"
-    t.string   "profile_url"
-    t.string   "sex"
-    t.string   "website"
-    t.text     "status_message"
-    t.datetime "status_time"
-    t.string   "pic"
-    t.string   "pic_with_logo"
-    t.string   "pic_big"
-    t.string   "pic_big_with_logo"
-    t.string   "pic_small"
-    t.string   "pic_small_with_logo"
-    t.string   "pic_square"
-    t.string   "pic_square_with_logo"
-  end
-
   create_table "feedbacks", :force => true do |t|
     t.string   "email"
     t.string   "body",           :null => false
@@ -44,27 +21,34 @@ ActiveRecord::Schema.define(:version => 20100327135547) do
   end
 
   create_table "games", :force => true do |t|
-    t.float    "avg_rating",           :default => 0.0
-    t.integer  "num_ratings",          :default => 0
-    t.float    "ranked_value",         :default => 0.0
-    t.boolean  "deleted",              :default => false
-    t.integer  "play_count",           :default => 0
-    t.boolean  "removed",              :default => false
-    t.string   "platform",             :default => "NES", :null => false
-    t.string   "storage_object_id",                       :null => false
+    t.float    "avg_rating",                  :default => 0.0
+    t.integer  "num_ratings",                 :default => 0
+    t.float    "ranked_value",                :default => 0.0
+    t.boolean  "deleted",                     :default => false
+    t.boolean  "received_dmca_takedown",      :default => false
+    t.integer  "play_count",                  :default => 0
+    t.string   "platform",                    :default => "NES", :null => false
     t.text     "description"
     t.string   "title"
-    t.boolean  "is_adult",             :default => false
+    t.boolean  "is_adult",                    :default => false
+    t.string   "storage_object_id",                              :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "user_has_selected_thumbnail"
+    t.boolean  "file_uploaded"
+    t.boolean  "file_published"
     t.integer  "user_id"
     t.integer  "thumbnail_id"
     t.string   "original_filename"
-    t.boolean  "is_uploaded",          :default => false
-    t.boolean  "show_in_publish_form", :default => true
   end
 
-  add_index "games", ["storage_object_id"], :name => "index_games_on_storage_object_id"
+  create_table "profilePhotos", :force => true do |t|
+    t.integer "user_id"
+    t.string  "storage_object_id", :null => false
+    t.string  "original_filename", :null => false
+    t.integer "width",             :null => false
+    t.integer "height",            :null => false
+  end
 
   create_table "ratings", :force => true do |t|
     t.integer  "rating",     :null => false
@@ -72,6 +56,13 @@ ActiveRecord::Schema.define(:version => 20100327135547) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "game_id"
+  end
+
+  create_table "rewards", :force => true do |t|
+    t.integer "num_bug_cookies_hidden",      :default => 0
+    t.integer "num_bug_cookies_visible",     :default => 0
+    t.integer "num_users_recruited_hidden",  :default => 0
+    t.integer "num_users_recruited_visible", :default => 0
   end
 
   create_table "thumbnails", :force => true do |t|
@@ -82,21 +73,6 @@ ActiveRecord::Schema.define(:version => 20100327135547) do
     t.datetime "updated_at"
     t.integer  "game_id"
     t.string   "original_filename"
-  end
-
-  create_table "userPhotos", :force => true do |t|
-    t.integer "user_id"
-    t.string  "storage_object_id", :null => false
-    t.string  "original_filename", :null => false
-    t.integer "width",             :null => false
-    t.integer "height",            :null => false
-  end
-
-  create_table "user_rewards", :force => true do |t|
-    t.integer "num_bug_cookies_hidden",      :default => 0
-    t.integer "num_bug_cookies_visible",     :default => 0
-    t.integer "num_users_recruited_hidden",  :default => 0
-    t.integer "num_users_recruited_visible", :default => 0
   end
 
   create_table "users", :force => true do |t|
@@ -116,15 +92,14 @@ ActiveRecord::Schema.define(:version => 20100327135547) do
     t.datetime "last_login_at"
     t.string   "current_login_ip"
     t.string   "last_login_ip"
+    t.text     "about"
+    t.string   "name"
     t.string   "facebook_id"
     t.string   "facebook_session_key"
     t.boolean  "facebook_new_user",    :default => false, :null => false
-    t.text     "about"
-    t.string   "name"
-    t.date     "expiration"
-    t.integer  "userPhoto_id"
-    t.integer  "facebook_cache_id"
-    t.integer  "user_reward_id"
+    t.boolean  "use_our_photo",        :default => false, :null => false
+    t.integer  "profilePhoto_id"
+    t.integer  "reward_id"
   end
 
   add_index "users", ["facebook_id"], :name => "index_users_on_facebook_id"

@@ -1,4 +1,5 @@
-class UserReward < ActiveRecord::Base
+class Reward < ActiveRecord::Base
+  
   has_one :user
   
   def count_total_for(field)

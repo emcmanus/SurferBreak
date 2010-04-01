@@ -18,12 +18,37 @@ require 'right_aws'
 require 'daemons'
 
 
-if ARGV[0] == "debug"
-  puts "Starting in debug mode"
-else
-  puts "Starting daemon..."
-  Daemons.daemonize
+debug = false
+environment = "production"
+
+for i in (0...(ARGV.count)) do
+  if ARGV[i].include? "debug"
+    debug = true
+  elsif ARGV[i].include? "environment"
+    environment = ARGV[i+1]
+    i += 1
+  elsif ARGV[i].to_s.include? "help"
+    puts "Usage: ./sqs_poller.rb [--debug] [--environment development]\n"
+    puts "Debug runs poller as a non-daemon process."
+    puts "Environment specifies which parameters to pick from the config."
+    exit
+  end
 end
+
+
+# Get path to log file before daemonizing
+log_file = File.expand_path(File.dirname(__FILE__)).to_s + "/sqs_poller_#{environment}.log"
+
+if debug
+  logger = Logger.new STDOUT
+  logger.info "Starting in debug mode."
+else
+  puts "Starting daemon."
+  Daemons.daemonize
+  logger = Logger.new log_file, 10, 1024000
+  logger.info "Poller started."
+end
+
 
 
 # Constants
@@ -31,28 +56,17 @@ end
 MAX_API_VERSION   = 1
 JOB_TYPE          = "thumbnail_generation"
 
-# TODO
-puts "\n\n\n"
-puts "NOTE: BE SURE TO HANDLE THE ENVIRONMENT!!! RIGHT NOW IT'S HARD-CODED TO PRODUCTION."
-puts "\n\n\n"
 
 require "../config/environment"
 
-# dbconfig = YAML::load(File.open('../config/database.yml'))["development"]
-# ActiveRecord::Base.establish_connection(dbconfig)
-# 
-# # Load all models
-# rails_models = Dir["../app/models/*.rb"]
-# 
-# rails_models.each do |model|
-#   require model
-# end
 
 class Processor
-  def initialize( access_key_id, secret_access_key )
+  def initialize( access_key_id, secret_access_key, logger )
     sqs = RightAws::SqsGen2.new access_key_id, secret_access_key
     @todo_queue = sqs.queue "UploadProcessingTodo"
     @done_queue = sqs.queue "UploadProcessingDone"
+    
+    @logger = logger
     
     @access_key_id = access_key_id
     @secret_access_key = secret_access_key
@@ -85,13 +99,13 @@ class Processor
         raise
       end
       
-      puts "Received finished job: #{@job.body}"
+      @logger.info "Received finished job: #{@job.body}"
       
       raise if job["meta"]["api_version"] > MAX_API_VERSION
       raise if job["meta"]["job_type"] != JOB_TYPE
       
       if job["meta"]["error"].to_s == "true"
-        puts "ERROR: " + job["meta"]["error_message"].to_s
+        @logger.error "ERROR: " + job["meta"]["error_message"].to_s
         raise
       end
       
@@ -118,14 +132,14 @@ class Processor
           thumb.save
           # Set Game default
           if object_id == job["screenshots"]["default"]
-            puts "Found default! Setting to #{object_id}"
+            @logger.info "Found default! Setting to #{object_id}"
             game.thumbnail = thumb
             game.save
           end
         end
       end
       
-      puts "Done. Added thumbnails and updated game object."
+      @logger.info "Done. Added thumbnails and updated game object."
     end
     
     
@@ -143,15 +157,15 @@ class Processor
     
 end
 
-s3_config = YAML::load(File.open '../config/amazon_s3.yml')['production']
+s3_config = YAML::load(File.open '../config/amazon_s3.yml')[environment]
 
-processor = Processor.new s3_config['access_key_id'], s3_config['secret_access_key']
+processor = Processor.new s3_config['access_key_id'], s3_config['secret_access_key'], logger
 
 begin
   processor.start
-rescue
-  processor.recover
-  puts "Recovered from error: " + $@.to_s
-  puts "Restarting loop."
+rescue Exception => e
+  processor.rescue
+  logger.warn "Recovered from error:\n#{e.inspect}\n#{$@}\n#{e.backtrace}"
+  logger.warn "Restarting loop."
   retry
 end

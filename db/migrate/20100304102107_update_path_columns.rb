@@ -26,7 +26,7 @@ class UpdatePathColumns < ActiveRecord::Migration
     
     # Users
     remove_column :users, :photo
-    # We add a new UserPhoto model in the next migration
+    # We add a new ProfilePhoto model in the next migration
   end
   
   def self.down

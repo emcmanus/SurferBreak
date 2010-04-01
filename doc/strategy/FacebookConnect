@@ -1,3 +1,11 @@
+//////////////////////////////////////////////////////////////////////
+
+Author:         Ed
+Last update:    04/01/2010
+
+//////////////////////////////////////////////////////////////////////
+
+
 Essentally build on Facebook's Users table.
 
 When someone hits a game view page and is signed into Facebook, show which of their friends are on the service.

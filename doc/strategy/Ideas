@@ -1,0 +1,52 @@
+//////////////////////////////////////////////////////////////////////
+
+Author:         Ed
+Last update:    04/01/2010
+
+//////////////////////////////////////////////////////////////////////
+
+
+Create a whiteboard ROM, then allow users to upload and send screenshots to others.
+
+ - Users will have a library of screenshots that they can attach to messages, games, profiles, etc.
+ - Site design
+ - Multiplayer
+ - Comments
+ - Profile Picture
+ - Profile picture - webcam integration
+ - Simple photo annotation widget -- allows you to circle, draw, and write on pictures
+ - Screenshots
+ - Attach screenshots to messages, profiles, etc.
+ - Facebook connect
+ - Integrate NES support
+ - NES screenshot grabber
+ - Fix SNES sound driver
+ - SNES preloader
+ - Talk to Zynga, Playdom etc. about PPI
+ - Search
+
+
+
+Preloader Social Mini Game:
+
+Memory with your friends' profile pictures
+Galaga with your friends' profile pictures as invading aliens, recruit friends (bots) to help you progress faster
+
+
+
+Strategy to Display Good-looking Games:
+
+In general, only display games with user_has_selected_thumbnail set to true, meaning the thumbnail is probably decent quality.
+
+
+
+Game Thumbnail Generation and Publishing:
+
+Games can be in the following states: a) Unprocessed, no thumbnails, b) Unpublished, ready for metadata editing, c) Published
+
+Don't reveal which thumbnail we've selected during the publishing step (push the user to select)
+The "publishing" step will have to be deferred to when the games have finished processing
+Create a status page (/account/game_status) just listing all games and their status
+Make it easy to publish all games or quickly update the thumbnail
+Remind the user of any unpublished games in a banner at the top of the page
+Email user when all games have completed processing (and are ready to be published) if the user hasn't been active in X minutes

@@ -1,7 +1,7 @@
-class AddUserPhoto < ActiveRecord::Migration
+class AddProfilePhoto < ActiveRecord::Migration
   def self.up
     
-    create_table :userPhotos do |t|
+    create_table :profilePhotos do |t|
       t.references  :user
       
       t.string      :storage_object_id,   :null => false
@@ -11,12 +11,12 @@ class AddUserPhoto < ActiveRecord::Migration
     end
     
     change_table :users do |t|
-      t.references :userPhoto
+      t.references :profilePhoto
     end
     
   end
 
   def self.down
-    drop_table :userPhotos
+    drop_table :profilePhotos
   end
 end

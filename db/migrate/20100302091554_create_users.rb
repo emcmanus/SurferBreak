@@ -20,17 +20,7 @@ class CreateUsers < ActiveRecord::Migration
       t.datetime  :last_login_at                                      # optional, see Authlogic::Session::MagicColumns
       t.string    :current_login_ip                                   # optional, see Authlogic::Session::MagicColumns
       t.string    :last_login_ip
-      
-      # Facebook connect
-      t.string  :facebook_id # UID
-      t.string  :facebook_session_key
-      t.boolean :facebook_new_user, :null => false, :default => false   # Show the extended registration process?
     end
-    
-    # Column Indexing - TODO add/fix these!
-    
-    add_index :users, :facebook_id
-    add_index :users, :facebook_session_key
     
     add_index :users, :username
     add_index :users, :persistence_token

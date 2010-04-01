@@ -1,4 +1,4 @@
-class UserPhoto < ActiveRecord::Base
+class ProfilePhoto < ActiveRecord::Base
   belongs_to :user
   
   def self.s3_bucket_path

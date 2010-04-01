@@ -1,3 +1,10 @@
+//////////////////////////////////////////////////////////////////////
+
+Author:         Ed
+Last update:    04/01/2010
+
+//////////////////////////////////////////////////////////////////////
+
 
 ######################################################################
 Menu
@@ -73,7 +80,7 @@ Thumbnail
     Width
     Height
 
-UserPhoto
+ProfilePhoto
     PK = ID
     -> User (FK)
     storage_object_id:string (Object ID)
@@ -83,7 +90,7 @@ UserPhoto
     
 User
     PK = ID
-    -> UserPhoto (FK)
+    -> ProfilePhoto (FK)
     Date
     Name
     Email

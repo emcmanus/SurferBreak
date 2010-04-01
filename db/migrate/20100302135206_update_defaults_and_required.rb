@@ -6,8 +6,8 @@ class UpdateDefaultsAndRequired < ActiveRecord::Migration
     change_column :games, :num_ratings, :integer, :default => 0
     change_column :games, :ranked_value, :float, :default => 0
     change_column :games, :deleted, :boolean, :default => false
+    change_column :games, :received_dmca_takedown, :boolean, :default => false
     change_column :games, :play_count, :integer, :default => 0
-    change_column :games, :removed, :boolean, :default => false
     change_column :games, :is_adult, :boolean, :default => false
     
     # Games, required

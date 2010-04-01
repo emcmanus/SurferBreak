@@ -18,18 +18,18 @@
 </h2>
 
 <div style="padding: 15px; border: 1px solid #ccc;" class="span-12">
-    <h3> <span class="highlight">Awards</span> <span class="parenthetical">(<%= @user.user_reward.count_rewards %>)</span></h3>
+    <h3> <span class="highlight">Awards</span> <span class="parenthetical">(<%= @user.reward.count_rewards %>)</span></h3>
     
     <p><strong>Bug cookies</strong> <%= link_to '(?)', "#", {:class=>"title_link"} %>:
         <!-- Beta rewards -->
-        <% (1..@user.user_reward.num_bug_cookies_visible).each do %>
+        <% (1..@user.reward.num_bug_cookies_visible).each do %>
             <%= image_tag '/images/icons/unsorted/medium-cookie-bite.png' %>
         <% end %>
     </p>
     
     <p><strong>Hidden awards</strong> <%= link_to '(?)', "#", {:class=>"title_link"} %>:
         <!-- Mystery rewards -->
-        <% (1..@user.user_reward.count_hidden_rewards).each do %>
+        <% (1..@user.reward.count_hidden_rewards).each do %>
             <%= image_tag '/images/icons/unsorted/medium-trophy.png' %>
         <% end %>
     </p>

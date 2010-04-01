@@ -1,6 +1,6 @@
-class CreateUserRewards < ActiveRecord::Migration
+class CreateRewards < ActiveRecord::Migration
   def self.up
-    create_table :user_rewards do |t|
+    create_table :rewards do |t|
       
       # Hidden Rewards - if the user chooses not to publish the reward to facebook, they show up as
       # mystery rewards on their public profile. For example, a user will have `num_bug_cookies` - 
@@ -15,12 +15,12 @@ class CreateUserRewards < ActiveRecord::Migration
     end
     
     change_table :users do |t|
-      t.references :user_reward
+      t.references :reward
     end
   end
 
   def self.down
-    drop_table :user_rewards
-    remove_column :users, :user_reward_id
+    drop_table :rewards
+    remove_column :users, :reward_id
   end
 end

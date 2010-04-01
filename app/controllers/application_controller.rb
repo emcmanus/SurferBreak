@@ -15,6 +15,15 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :fb_sig_friends
   
   private
+    # Memcache
+    def get_cached(key, expires=1.hour)
+      unless output = CACHE.get(key)
+        output = yield
+        CACHE.set(key, output, expires)
+      end
+      return output
+    end
+    
     # Require Facebook Connect
     def require_connected_user
       unless current_user or self.controller_name == "user_sessions"
