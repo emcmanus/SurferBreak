@@ -13,7 +13,7 @@
     <%= @user.display_name || "User Profile" %>
     
     <% if current_user == @user %>
-        <%= link_to '(Edit)', edit_account_path, {:class=>"title_link"} %>
+        <%= link_to '(Edit)', edit_profile_path, {:class=>"title_link"} %>
     <% end %>
 </h2>
 
@@ -68,7 +68,7 @@
             <% unless @user.safe_get(:about).blank? %>
                 <%= @user.safe_get :about %>
             <% else %>
-                <%= link_to "Add content", edit_account_path %>
+                <%= link_to "Add content", edit_profile_path %>
             <% end %>
         <% else %>
             (empty)

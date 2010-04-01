@@ -1,61 +1,45 @@
 ActionController::Routing::Routes.draw do |map|
   
-  # Sessions
-  map.resource  :user_session
-  
-  # Profile
-  map.resource  :account,     :controller => "users" # /account/new => users#new
-  
-  # Games
-  map.game      "games/:id",  :controller => "games", :action => "show"
-  map.resource  :game,        :controller => "games"
-  
-  # User profiles
-  map.user      "users/:id",  :controller => "users", :action => "show"
-  
-  # List
-  map.list      "list",       :controller => "list",  :action => "show"
-  
-  # Uploader
-  map.upload          "upload",               :controller => "upload", :action => "show"            # Show uploader
-  map.upload_key      "upload/policy",        :controller => "upload", :action => "generate_policy" # S3 policy generation
-  map.upload_finish   "upload/file_sent",     :controller => "upload", :action => "file_sent"       # Single file uploaded
-  map.upload_publish  "upload/publish",       :controller => "upload", :action => "publish"         # All uploads completed
-  
-  # HTML Uploader
-  map.html_upload         "upload/html",          :controller => "upload", :action => "html_uploader"
-  map.html_upload_finish  "upload/html/upload",   :controller => "upload", :action => "html_uploader_finish"
-  
-  # Home
-  map.root      :controller => "home",  :action => "show"
-  
   # Your Stuff
-  # map.account             "account",                  :controller => ""
-  # map.profile             "account/profile",          :controller => ""
-  # map.edit_profile        "account/profile/edit",     :controller => ""
-  # map.user_settings       "account/settings",         :controller => ""
-  # map.edit_user_settings  "account/settings/edit",    :controller => ""
-  # map.my_games            "account/games",            :controller => ""
-  # map.edit_game           "account/games/edit",       :controller => ""
-  # map.forgot_password     "account/forgot_password",  :controller => ""
+  map.account               "account",                  :controller => "users",   :action => "show"    # This is all stuff unique to "you" the user, eventually we can add account summary type stuff
+  map.profile               "account/profile",          :controller => "users",   :action => "show"    # For now this is the same as /account
+  map.edit_profile          "account/profile/edit",     :controller => "users",   :action => "edit"    # Edit your account
+  map.account_settings      "account/settings",         :controller => "users",   :action => "edit"    # Account settings (privacy, email settings)
+  map.edit_account_settings "account/settings/edit",    :controller => "users",   :action => "edit"    # Edit account settings
+  map.account_games         "account/games",            :controller => "users",   :action => "show"    # "My Games" - list and manage the games you've uploaded
+  map.edit_account_game     "account/games/edit/:id",   :controller => "games",   :action => "edit"    # Edit a game
+  map.forgot_password       "account/forgot_password",  :controller => "users",   :action => "edit"    # Password reset and mailer
   
   # Other People's Stuff
+  map.user                  "users/id/:id",             :controller => "users", :action => "show"     # User profile
+  map.game                  "console-games/:slug/:id",  :controller => "games", :action => "show"     # Play the game
   
-  # Community Stuff (Other people in aggregate)
+  # Community Stuff - Other People in Aggregate -- TODO: Remove TEMPORARY path
+  map.list                  "list",                     :controller => "list",  :action => "show"
+  map.list_users            "users",                    :controller => "list",  :action => "show"           # User summary - search, new users, recently active, etc.
+  map.list_games            "console-games",            :controller => "list",  :action => "show"           # Game summary - search, new games, recently active, etc.
+  map.home                  "home",                     :controller => "home",  :action => "show"           # The state of the community - new games, users, comments, etc.
+  map.root                                              :controller => "home",  :action => "show"
   
   # Other
-  map.register  "register",     :controller => "users",           :action => "new"
+  map.register              "register",                 :controller => "users",           :action => "new"      # Register -> surferbreak.com/account/new
+  map.login                 "login",                    :controller => "user_sessions",   :action => "new"      # Login    -> surferbreak.com/user_sessions/new
+  map.logout                "logout",                   :controller => "user_sessions",   :action => "destroy"  # Sign out -> surferbreak.com/user_sessions/destroy
   
-  map.login     "login",        :controller => "user_sessions",   :action => "new"
-  map.logout    "logout",       :controller => "user_sessions",   :action => "destroy"
+  # Uploaders
+  map.upload                "upload",                   :controller => "upload", :action => "show"            # Show uploader
+  map.upload_key            "upload/policy",            :controller => "upload", :action => "generate_policy" # S3 policy generation
+  map.upload_finish         "upload/file_sent",         :controller => "upload", :action => "file_sent"       # Single file uploaded
+  map.upload_publish        "upload/publish",           :controller => "upload", :action => "publish"         # All uploads completed
   
+  map.html_upload           "upload/html",              :controller => "upload", :action => "html_uploader"
+  map.html_upload_finish    "upload/html/upload",       :controller => "upload", :action => "html_uploader_finish"
+  
+  # Internal Admin Panels
+  map.connect               "internal",                 :controller => "list",  :action => "show"       # Aggregate Site Summary
+  map.connect               "internal/admin",           :controller => "list",  :action => "show"       # Take action, DMCA, bans, group messages, etc.
   
 end
-
-
-
-
-
 
 
 
