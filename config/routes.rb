@@ -14,7 +14,10 @@ ActionController::Routing::Routes.draw do |map|
   map.user                  "users/id/:id",             :controller => "users", :action => "show"     # User profile
   map.game                  "console-games/:slug/:id",  :controller => "games", :action => "show"     # Play the game
   
-  # Community Stuff - Other People in Aggregate -- TODO: Remove TEMPORARY path
+  # Surferbreak Games
+  map.memory_game           "games/memory",             :controller => "games/memory", :action => "show"
+  
+  # Community Stuff - Other People in Aggregate -- TODO: Remove TEMPORARY path "list"
   map.list                  "list",                     :controller => "list",  :action => "show"
   map.list_users            "users",                    :controller => "list",  :action => "show"           # User summary - search, new users, recently active, etc.
   map.list_games            "console-games",            :controller => "list",  :action => "show"           # Game summary - search, new games, recently active, etc.
