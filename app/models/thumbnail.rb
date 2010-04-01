@@ -1,3 +1,14 @@
+# create_table "thumbnails", :force => true do |t|
+#   t.string   "storage_object_id", :null => false
+#   t.integer  "width",             :null => false
+#   t.integer  "height",            :null => false
+#   t.datetime "created_at"
+#   t.datetime "updated_at"
+#   t.integer  "game_id"
+#   t.string   "original_filename"
+# end
+
+
 class Thumbnail < ActiveRecord::Base
   belongs_to :game    # Many thumbnails to one game
   

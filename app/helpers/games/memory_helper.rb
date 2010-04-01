@@ -1,0 +1,2 @@
+module Games::MemoryHelper
+end

@@ -1,3 +1,10 @@
+# create_table "rewards", :force => true do |t|
+#   t.integer "num_bug_cookies_hidden",      :default => 0
+#   t.integer "num_bug_cookies_visible",     :default => 0
+#   t.integer "num_users_recruited_hidden",  :default => 0
+#   t.integer "num_users_recruited_visible", :default => 0
+# end
+
 class Reward < ActiveRecord::Base
   
   has_one :user
