@@ -2,7 +2,7 @@ class CreateFeedbacks < ActiveRecord::Migration
   def self.up
     create_table :feedbacks do |t|
       t.string :email
-      t.text :body
+      t.text :body,             :null => false
       t.string :submission_url
 
       t.timestamps

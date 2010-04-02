@@ -1,0 +1,38 @@
+<h2>Publish</h2>
+
+<div class="span-24">
+
+<h3><span class="highlight">Generating Thumbnails</span> <span class="parenthetical">(<%= @unprocessed_games.length %>)</span></h3>
+
+<% if @unprocessed_games.length > 0 %>
+    <table style="border: 1px dotted #ededed; padding: 15px;">
+        <% @unprocessed_games.each_with_index do | game, index | %>
+            <tr style="<%= "background-color: #f5f5f5" if index % 2 == 1 %>"><td>
+                <%= image_tag "icons/unsorted/arrow-spinner.gif" %> <%= game.title %>
+            </td></tr>
+        <% end %>
+        <tr style="<%= "background-color: #f5f5f5;" if @unprocessed_games.length % 2 == 1 %>"><td>
+            <br/><%= link_to "Reload", publish_path %> <i> (You have to click for updates)
+        </td></tr>
+    </table>
+<% else %>
+    <i>There are no uploads being processed.</i>
+<% end %>
+
+<hr class="space" />
+
+<h3><span class="highlight">Ready to Publish</span> <span class="parenthetical">(<%= @unpublished_games.length %>)</span></h3>
+
+<% if @unpublished_games.length > 0 %>
+    <table style="border: 1px dotted #ededed; padding: 15px;">
+        <% @unpublished_games.each_with_index do | @game, index | %>
+            <tr><td>
+                <%= render :partial => 'publish_form' %>
+            </td></tr>
+        <% end %>
+    </table>
+<% else %>
+    <i>There are no games you can publish.</i>
+<% end %>
+
+</div>

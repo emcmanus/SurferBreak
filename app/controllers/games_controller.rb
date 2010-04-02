@@ -8,7 +8,7 @@ class GamesController < ApplicationController
   
   # GET /games/1
   def show
-    @game = Game.find(params[:id])
+    @game = Game.find_by_url(params[:id])
     @thumbnails = Thumbnail.find_all_by_game_id(params[:id])
   end
   
@@ -21,7 +21,7 @@ class GamesController < ApplicationController
 
   # GET /games/1/edit
   def edit
-    @game = Game.find(params[:id])
+    @game = Game.find_by_url(params[:id])
     @thumbnails = Thumbnail.find_all_by_game_id(@game)
   end
 
@@ -43,7 +43,7 @@ class GamesController < ApplicationController
 
   # PUT /games/1
   def update
-    @game = Game.find(params[:id])
+    @game = Game.find_by_url(params[:id])
 
     respond_to do |format|
       if @game.update_attributes(params[:game])
@@ -58,7 +58,7 @@ class GamesController < ApplicationController
 
   # DELETE /games/1
   def destroy
-    @game = Game.find(params[:id])
+    @game = Game.find_by_url(params[:id])
     @game.destroy
 
     respond_to do |format|

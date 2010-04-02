@@ -61,6 +61,7 @@ require "../config/environment"
 
 
 class Processor
+  
   def initialize( access_key_id, secret_access_key, logger )
     sqs = RightAws::SqsGen2.new access_key_id, secret_access_key
     @todo_queue = sqs.queue "UploadProcessingTodo"
@@ -74,6 +75,7 @@ class Processor
     @root_path  = File.expand_path(File.dirname(__FILE__))
   end
   
+  
   def start
     while true
       @job = @done_queue.pop
@@ -85,9 +87,24 @@ class Processor
     end
   end
   
-  def rescue
-    # See if we can pick out the Game ID; should log eventually
+  
+  def recover
+    # Update file_processed, if possible
+    @logger.info "Attempting to update Game object."
+    
+    begin
+      job = JSON.parse @job.body
+    rescue JSON::ParserError
+      raise
+    end
+    game_id = job["meta"]["passthru"]["game_id"]
+    if game_id
+      game = Game.find(game_id.to_i)
+      game.file_processed = true
+      game.save
+    end
   end
+  
   
   private
     
@@ -106,6 +123,7 @@ class Processor
       
       if job["meta"]["error"].to_s == "true"
         @logger.error "ERROR: " + job["meta"]["error_message"].to_s
+        recover
         raise
       end
       
@@ -122,7 +140,7 @@ class Processor
       # Save thumbnail objects
       screenshots = job["screenshots"]["storage_ids"]
       unless screenshots.nil? or screenshots.length == 0 or game.nil?
-        screenshots.each do |object_id|
+        screenshots.each_with_index do |object_id, index|
           # Save Thumbnail object
           thumb = Thumbnail.new
           thumb.width = job["screenshots"]["width"]
@@ -134,10 +152,18 @@ class Processor
           if object_id == job["screenshots"]["default"]
             @logger.info "Found default! Setting to #{object_id}"
             game.thumbnail = thumb
-            game.save
+          end
+          if index == (screenshots.length - 1)
+            # No match exists
+            unless game.thumbnail
+              @logger.error "Could not find a default thumbnail."
+            end
           end
         end
       end
+      
+      game.file_processed = true
+      game.save
       
       @logger.info "Done. Added thumbnails and updated game object."
     end
@@ -164,8 +190,13 @@ processor = Processor.new s3_config['access_key_id'], s3_config['secret_access_k
 begin
   processor.start
 rescue Exception => e
-  processor.rescue
   logger.warn "Recovered from error:\n#{e.inspect}\n#{$@}\n#{e.backtrace}"
+  begin
+    processor.recover
+  rescue Exception => exception
+    logger.error "Recover failed."
+    logger.error "Recovery error was:\n#{exception.inspect}\n#{$@}\n#{exception.backtrace}"
+  end
   logger.warn "Restarting loop."
   retry
 end

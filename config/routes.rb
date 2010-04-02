@@ -10,12 +10,12 @@ ActionController::Routing::Routes.draw do |map|
   map.account_settings      "account/settings",         :controller => "users",   :action => "edit"    # Account settings (privacy, email settings)
   map.edit_account_settings "account/settings/edit",    :controller => "users",   :action => "edit"    # Edit account settings
   map.account_games         "account/games",            :controller => "users",   :action => "show"    # "My Games" - list and manage the games you've uploaded
-  map.edit_account_game     "account/games/edit/:id",   :controller => "games",   :action => "edit"    # Edit a game
+  map.edit_game             "account/games/edit/:id",   :controller => "games",   :action => "edit"    # Edit a game
   map.forgot_password       "account/forgot_password",  :controller => "users",   :action => "edit"    # Password reset and mailer
   
   # Other People's Stuff
-  map.user                  "users/id/:id",             :controller => "users", :action => "show"     # User profile
-  map.game                  "console-games/:slug/:id",  :controller => "games", :action => "show"     # Play the game
+  map.user                  "users/:id",                :controller => "users", :action => "show"     # User profile
+  map.game                  "console-games/:id",        :controller => "games", :action => "show"     # Play the game
   
   # Surferbreak Games
   map.memory_game           "games/memory",             :controller => "games/memory", :action => "show"
@@ -32,14 +32,17 @@ ActionController::Routing::Routes.draw do |map|
   map.login                 "login",                    :controller => "user_sessions",   :action => "new"      # Login    -> surferbreak.com/user_sessions/new
   map.logout                "logout",                   :controller => "user_sessions",   :action => "destroy"  # Sign out -> surferbreak.com/user_sessions/destroy
   
+  
   # Uploaders
   map.upload                "upload",                   :controller => "upload", :action => "show"            # Show uploader
   map.upload_key            "upload/policy",            :controller => "upload", :action => "generate_policy" # S3 policy generation
   map.upload_finish         "upload/file_sent",         :controller => "upload", :action => "file_sent"       # Single file uploaded
-  map.upload_publish        "upload/publish",           :controller => "upload", :action => "publish"         # All uploads completed
+  map.publish               "upload/publish",           :controller => "publish", :action => "show"           # Shows "Unprocessed" and "Unpublished" games
   
   map.html_upload           "upload/html",              :controller => "upload", :action => "html_uploader"
   map.html_upload_finish    "upload/html/upload",       :controller => "upload", :action => "html_uploader_finish"
+  
+  
   
   # Internal Admin Panels
   map.connect               "internal",                 :controller => "list",  :action => "show"       # Aggregate Site Summary

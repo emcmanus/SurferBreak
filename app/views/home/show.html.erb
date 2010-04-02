@@ -16,10 +16,11 @@
         </ol>
     </div>
 
-    <div class="span-14 last" style="background-color: #ededed; height: 40em;">
-        Rolling screenshots
+    <div class="span-13">
+        <% if @top_games.first.try(:thumbnail) %>
+            <%= image_tag @top_games.first.thumbnail.s3_path, :width => 512, :height => 448 %>
+        <% end %>
     </div>
-
 </div>
 
 <hr />
@@ -27,8 +28,7 @@
 <div class="span-24">
 
     <div class="span-12">
-        <h3> <span class="highlight"> New Users </span></h3>
-
+        <h3> <span class="highlight"> New Users </span> </h3>
         <% @new_users.each do |user| %>
             <%= link_to user.display_name || "User #{user.id}", user %>, Created <%= time_ago_in_words user.created_at %> ago <br/>
         <% end %>

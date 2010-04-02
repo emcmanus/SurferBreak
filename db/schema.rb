@@ -13,7 +13,7 @@ ActiveRecord::Schema.define(:version => 20100327135547) do
 
   create_table "feedbacks", :force => true do |t|
     t.string   "email"
-    t.string   "body",           :null => false
+    t.text     "body",           :null => false
     t.string   "submission_url"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -21,22 +21,23 @@ ActiveRecord::Schema.define(:version => 20100327135547) do
   end
 
   create_table "games", :force => true do |t|
-    t.float    "avg_rating",                  :default => 0.0
-    t.integer  "num_ratings",                 :default => 0
-    t.float    "ranked_value",                :default => 0.0
-    t.boolean  "deleted",                     :default => false
-    t.boolean  "received_dmca_takedown",      :default => false
-    t.integer  "play_count",                  :default => 0
+    t.float    "avg_rating",                  :default => 0.0,   :null => false
+    t.integer  "num_ratings",                 :default => 0,     :null => false
+    t.float    "ranked_value",                :default => 0.0,   :null => false
+    t.boolean  "deleted",                     :default => false, :null => false
+    t.boolean  "received_dmca_takedown",      :default => false, :null => false
+    t.integer  "play_count",                  :default => 0,     :null => false
     t.string   "platform",                    :default => "NES", :null => false
     t.text     "description"
     t.string   "title"
-    t.boolean  "is_adult",                    :default => false
+    t.boolean  "is_adult",                    :default => false, :null => false
     t.string   "storage_object_id",                              :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "user_has_selected_thumbnail"
-    t.boolean  "file_uploaded"
-    t.boolean  "file_published"
+    t.boolean  "user_has_selected_thumbnail", :default => false, :null => false
+    t.boolean  "file_uploaded",               :default => false, :null => false
+    t.boolean  "file_processed",              :default => false, :null => false
+    t.boolean  "file_published",              :default => false, :null => false
     t.integer  "user_id"
     t.integer  "thumbnail_id"
     t.string   "original_filename"

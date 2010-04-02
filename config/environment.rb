@@ -13,6 +13,7 @@ Rails::Initializer.run do |config|
   config.gem "right_aws"
   config.gem "json"
   config.gem "facebooker"
+  config.gem "stringex"   # String extensions, adds "to_url" to String
   
   config.cache_store = :mem_cache_store, "localhost"
   

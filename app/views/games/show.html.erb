@@ -19,8 +19,14 @@
     <script type="text/javascript">
 
         var file = "all/" + escape("<%= @game.original_filename %>");
-
-        swfobject.embedSWF("http://localhost/snes/Snes.swf?rom=" + file, "emulator", "512", "448", "10.0.0");
+        
+        <% if true %>
+            // For Debug Builds
+            swfobject.embedSWF("http://localhost/snes/Snes.swf?rom=" + file, "emulator", "512", "448", "10.0.0");
+        <% else %>
+            // TODO: Retarget the Rails version
+            swfobject.embedSWF("http://localhost/snes/Snes.swf?rom=" + file, "emulator", "512", "448", "10.0.0");
+        <% end %>
     
     </script>
 

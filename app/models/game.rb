@@ -1,20 +1,29 @@
+
 # create_table "games", :force => true do |t|
-#   t.float    "avg_rating",                  :default => 0.0
-#   t.integer  "num_ratings",                 :default => 0
-#   t.float    "ranked_value",                :default => 0.0
-#   t.boolean  "deleted",                     :default => false
-#   t.boolean  "received_dmca_takedown",      :default => false
-#   t.integer  "play_count",                  :default => 0
+#   t.float    "avg_rating",                  :default => 0.0,   :null => false
+#   t.integer  "num_ratings",                 :default => 0,     :null => false
+#   t.float    "ranked_value",                :default => 0.0,   :null => false
+#   t.boolean  "deleted",                     :default => false, :null => false
+#   t.boolean  "received_dmca_takedown",      :default => false, :null => false
+#   t.integer  "play_count",                  :default => 0,     :null => false
 #   t.string   "platform",                    :default => "NES", :null => false
 #   t.text     "description"
 #   t.string   "title"
-#   t.boolean  "is_adult",                    :default => false
+#   t.boolean  "is_adult",                    :default => false, :null => false
 #   t.string   "storage_object_id",                              :null => false
 #   t.datetime "created_at"
 #   t.datetime "updated_at"
-#   t.boolean  "user_has_selected_thumbnail"
-#   t.boolean  "file_uploaded"
-#   t.boolean  "file_published"
+#   t.boolean  "user_has_selected_thumbnail", :default => false, :null => false
+
+# Sent to S3
+#   t.boolean  "file_uploaded",               :default => false, :null => false
+
+# Thumbnails Generated (or we know generation failed)
+#   t.boolean  "file_processed",              :default => false, :null => false
+
+# User has reviewed game info and published game
+#   t.boolean  "file_published",              :default => false, :null => false
+
 #   t.integer  "user_id"
 #   t.integer  "thumbnail_id"
 #   t.string   "original_filename"
@@ -29,6 +38,41 @@ class Game < ActiveRecord::Base
   
   has_many :ratings
   
+  
+  # 
+  # Slugs
+  
+  def self.find_by_url(id)
+    id = id.split("-").first.to_i
+    return self.find(id)
+  end
+  
+  def slug
+    (self.title.to_url.split("-") - StopWords::English.all).first(6).join("-")
+  end
+  
+  # SEO-friendly URL
+  def to_param
+    "#{self.id}-#{self.platform.downcase}-#{self.slug}"
+  end
+  
+  
+  # 
+  # Aliases
+  
+  def self.find_unpublished_for(user)
+    return self.all :conditions => { :user_id => user.id, :file_uploaded => true, :file_processed => true, :file_published => false}
+    # return self.all :conditions => ["user_id = ? AND file_uploaded = true AND file_processed = true AND file_published = false", user.id]
+  end
+  
+  def self.find_unprocessed_for(user)
+    return self.all :conditions => { :user_id => user.id, :file_uploaded => true, :file_processed => false, :file_published => false}
+    # return self.all :conditions => ["user_id = ? AND file_uploaded = true AND file_processed = false AND file_published = false", user.id]
+  end
+  
+  
+  # 
+  # Paths
   
   def self.s3_bucket_path
     "http://#{S3Keys::S3Config.bucket}.s3.amazonaws.com/"
@@ -50,18 +94,21 @@ class Game < ActiveRecord::Base
   end
   
   
+  # 
+  # Thumbnail Generation
+  
   attr_accessor :is_uploaded
   
   def is_uploaded=(value)
     if (value == true)
-      puts "calling enqueue job"
+      logger.info "calling enqueue job"
       enqueue_job
     end
-    @is_uploaded = value
+    self[:file_uploaded] = value
   end
   
   def is_uploaded
-    @is_uploaded
+    self[:file_uploaded]
   end
   
   private
@@ -92,14 +139,17 @@ class Game < ActiveRecord::Base
     queue = sqs.queue "UploadProcessingTodo"
     
     attempts = 0
-    # begin
+    begin
       attempts += 1
       send_success = queue.send_message job_message.to_json
       raise unless send_success
-    # rescue
-    #   puts e
-    #   retry if attempts < 3
-    # end
+    rescue
+      if attempts < 3
+        retry
+      else
+        raise
+      end
+    end
   end
   
 end
