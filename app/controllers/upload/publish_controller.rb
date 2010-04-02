@@ -1,4 +1,4 @@
-class PublishController < ApplicationController
+class Upload::PublishController < ApplicationController
   
   def show
     # Find all unpublished games for this user, display metadata forms for each

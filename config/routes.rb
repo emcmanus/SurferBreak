@@ -3,7 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   # Sessions
   map.resource              :user_session
   
-  # Your Stuff
+  # Your Stuff TODO: move to "account" namespace
   map.account               "account",                  :controller => "users",   :action => "show"    # This is all stuff unique to "you" the user, eventually we can add account summary type stuff
   map.profile               "account/profile",          :controller => "users",   :action => "show"    # For now this is the same as /account
   map.edit_profile          "account/profile/edit",     :controller => "users",   :action => "edit"    # Edit your account
@@ -37,12 +37,11 @@ ActionController::Routing::Routes.draw do |map|
   map.upload                "upload",                   :controller => "upload", :action => "show"            # Show uploader
   map.upload_key            "upload/policy",            :controller => "upload", :action => "generate_policy" # S3 policy generation
   map.upload_finish         "upload/file_sent",         :controller => "upload", :action => "file_sent"       # Single file uploaded
-  map.publish               "upload/publish",           :controller => "publish", :action => "show"           # Shows "Unprocessed" and "Unpublished" games
   
-  map.html_upload           "upload/html",              :controller => "upload", :action => "html_uploader"
-  map.html_upload_finish    "upload/html/upload",       :controller => "upload", :action => "html_uploader_finish"
-  
-  
+  map.namespace(:upload) do | upload |
+    upload.publish  'publish',    :controller => "publish",   :action => "show"
+    upload.html     'html',       :controller => "html",      :action => "show"
+  end
   
   # Internal Admin Panels
   map.connect               "internal",                 :controller => "list",  :action => "show"       # Aggregate Site Summary

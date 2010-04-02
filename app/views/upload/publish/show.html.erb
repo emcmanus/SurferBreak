@@ -12,7 +12,7 @@
             </td></tr>
         <% end %>
         <tr style="<%= "background-color: #f5f5f5;" if @unprocessed_games.length % 2 == 1 %>"><td>
-            <br/><%= link_to "Reload", publish_path %> <i> (You have to click for updates)
+            <br/><%= link_to "Reload", upload_publish_path %> <i> (You have to click for updates)
         </td></tr>
     </table>
 <% else %>
