@@ -1,5 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
   
+  # Sessions
+  map.resource              :user_session
+  
   # Your Stuff
   map.account               "account",                  :controller => "users",   :action => "show"    # This is all stuff unique to "you" the user, eventually we can add account summary type stuff
   map.profile               "account/profile",          :controller => "users",   :action => "show"    # For now this is the same as /account
@@ -23,7 +26,7 @@ ActionController::Routing::Routes.draw do |map|
   map.list_games            "console-games",            :controller => "list",  :action => "show"           # Game summary - search, new games, recently active, etc.
   map.home                  "home",                     :controller => "home",  :action => "show"           # The state of the community - new games, users, comments, etc.
   map.root                                              :controller => "home",  :action => "show"
-  
+      
   # Other
   map.register              "register",                 :controller => "users",           :action => "new"      # Register -> surferbreak.com/account/new
   map.login                 "login",                    :controller => "user_sessions",   :action => "new"      # Login    -> surferbreak.com/user_sessions/new
@@ -41,7 +44,7 @@ ActionController::Routing::Routes.draw do |map|
   # Internal Admin Panels
   map.connect               "internal",                 :controller => "list",  :action => "show"       # Aggregate Site Summary
   map.connect               "internal/admin",           :controller => "list",  :action => "show"       # Take action, DMCA, bans, group messages, etc.
-  
+
 end
 
 

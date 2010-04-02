@@ -1,1 +1,10 @@
-memory game!
+<h2>Memory Game</h2>
+
+<h3>Friends</h3>
+
+<% for friend in @fb_friends %>
+    <p>
+        <% friend.populate %>
+        <b>Friend:</b> <%= (image_tag friend.pic_square) if friend.pic_square %>
+    </p>
+<% end %>

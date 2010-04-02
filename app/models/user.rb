@@ -34,30 +34,18 @@ class User < ActiveRecord::Base
   belongs_to  :reward,     :dependent => :destroy
   belongs_to  :user_photo
   
-  # TODO: cleanup old methods:
-  
-  # Update or create expired caches
-  # def update_caches
-  #   fb_cache = self.facebook_cache || self.build_facebook_cache
-  #   fb_cache.refresh_cache unless fb_cache.is_valid?
-  #   
-  #   # Update FB cache in memcache
-  # end
   
   # Build FB cache on connect
+  
   def before_connect(facebook_session)
-    # Only setup the first fime -- debug
-    # TODO: create user_reward but only on the first connect
     unless self.reward
       reward = self.build_reward
-      reward.num_bug_cookies_visible = 1
-      reward.num_users_recruited_hidden = 2
       reward.save
     end
-    
-    # Use existing session to fill out cache
-    # fb_cache = self.facebook_cache || self.build_facebook_cache
-    # fb_cache.refresh_cache facebook_session.user
+  end
+  
+  def facebook_user
+    return Facebooker::User.new self.facebook_id
   end
   
   # 
