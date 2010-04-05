@@ -11,7 +11,6 @@ class CreateGames < ActiveRecord::Migration
       t.string    :platform,                  :null => false,   :default => "NES"
       t.text      :description
       t.string    :title
-      t.boolean   :is_adult,                  :null => false,   :default => false
       
       # File attributes
       t.string    :file,                      :null => false

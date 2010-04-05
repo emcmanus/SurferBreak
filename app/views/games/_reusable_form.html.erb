@@ -1,0 +1,58 @@
+<%# Requires locals: form, game, col1, col2, select_id %>
+
+<%# Errors %>
+<%= form.error_messages %>
+
+<div class="span-<%= col2 %> last">
+    
+    <h4><strong>File: <%= game.original_filename %></strong></h4>
+    <%# Title %>
+    <%= form.label :title %><br />
+    <%= form.text_field :title %><br />
+    <br/>
+
+    <%# Description %>
+    <%= form.label :description %><br />
+    <%= form.text_area :description, :style => "height: 4em;" %><br />
+    <br/>
+
+    <%# Thumbnail %>
+    <%= form.label :thumbnail_id %><br />
+    <%= form.select :thumbnail_id, options_from_collection_for_select([no_thumbnail_option] + game.thumbnails, :id, :s3_path) %>
+</div>
+
+<hr class="space" />
+
+<div class="span-<%= col1 %>">
+    <%= image_tag no_thumbnail_option.s3_path, :id => "game_#{game.id}_preview", :style => "border: 1px solid #ccc" %>
+    <script type="text/javascript" charset="utf-8">
+        var selectedThumbnailForGame<%= game.id %> = 0;   // Index
+        function setThumbForGame<%= game.id %>( newIndex )
+        {
+            selectedThumbnailForGame<%= game.id %> = newIndex;
+        }
+        function updateThumbForGame<%= game.id %>( newIndex )
+        {
+            $('<%= select_id %>').selectedIndex = newIndex;
+            $('game_<%= game.id %>_preview').src = $('<%= select_id %>').options[newIndex].innerHTML;
+        }
+    </script>
+</div>
+
+<div class="span-<%= col2 %> last">
+    <% game.thumbnails.each_with_index do | thumbnail, index | %>
+        <%= image_tag thumbnail.s3_path, :width => 64, :height => 56, :id => "thumb#{thumbnail.id}", :style => "border: 1px solid #ccc;" %>
+        
+        <script type="text/javascript" charset="utf-8">
+            $('thumb<%= thumbnail.id %>').observe("mouseover", function(e){
+                updateThumbForGame<%= game.id %>(<%= index + 1 %>);
+            });
+            $('thumb<%= thumbnail.id %>').observe("mouseout", function(e){
+                updateThumbForGame<%= game.id %>(selectedThumbnailForGame<%= game.id %>);
+            });
+            $('thumb<%= thumbnail.id %>').observe("mousedown", function(e){
+                setThumbForGame<%= game.id %>(<%= index + 1 %>);
+            });
+        </script>
+    <% end %>
+</div>

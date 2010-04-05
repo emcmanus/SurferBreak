@@ -11,7 +11,6 @@ one:
   file: MyString
   description: MyText
   title: MyString
-  is_adult: false
 
 two:
   avg_rating: 1.5
@@ -24,4 +23,3 @@ two:
   file: MyString
   description: MyText
   title: MyString
-  is_adult: false

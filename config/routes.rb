@@ -39,8 +39,8 @@ ActionController::Routing::Routes.draw do |map|
   map.upload_finish         "upload/file_sent",         :controller => "upload", :action => "file_sent"       # Single file uploaded
   
   map.namespace(:upload) do | upload |
-    upload.publish  'publish',    :controller => "publish",   :action => "show"
-    upload.html     'html',       :controller => "html",      :action => "show"
+    upload.resource         :publish,                   :controller => :publish, :only => [:index, :show, :create]
+    upload.html             'html',                     :controller => "html", :action => "show"
   end
   
   # Internal Admin Panels

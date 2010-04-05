@@ -20,6 +20,15 @@ input[type="text"], form textarea, input[type="password"] {
   padding-bottom: 5px;
 }
 
+/* When form elements are in a form_container, expand to 100% width */
+.form_container textarea
+{
+  width: 100%;
+}
+.form_container input 
+{
+  width: 100%;
+}
 
 #global-container
 {
@@ -121,25 +130,6 @@ h3 span
 h3 span.parenthetical
 {
   font-size: 0.6em;
-}
-
-
-
-
-
-
-/* Publish Form */
-
-img.publish_thumbnail
-{
-  margin: 3px;
-}
-
-img.publish_thumbnail:hover
-{
-  margin: 0;
-  cursor: pointer;
-  border: 3px solid blue;
 }
 
 

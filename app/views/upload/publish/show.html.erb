@@ -1,38 +1,56 @@
+<% content_for :head do %>
+    <style type="text/css">
+        /* Publish Form */
+        .thumbPreviewContainer img { border: 1px solid #555; }
+        .thumbOptionContainer .publish_thumbnail { border: 1px solid #555; margin: 2px; }
+        .thumbOptionContainer .publish_thumbnail:hover { margin: 0; cursor: pointer; border: 3px solid red; }
+        .thumbOptionContainer .publish_thumbnail.selected { border: 3px solid blue; margin: 0; }
+    </style>
+<% end %>
+
+
 <h2>Publish</h2>
 
 <div class="span-24">
-
-<h3><span class="highlight">Generating Thumbnails</span> <span class="parenthetical">(<%= @unprocessed_games.length %>)</span></h3>
-
-<% if @unprocessed_games.length > 0 %>
-    <table style="border: 1px dotted #ededed; padding: 15px;">
-        <% @unprocessed_games.each_with_index do | game, index | %>
-            <tr style="<%= "background-color: #f5f5f5" if index % 2 == 1 %>"><td>
-                <%= image_tag "icons/unsorted/arrow-spinner.gif" %> <%= game.title %>
-            </td></tr>
+    
+    <h3>
+        <span class="highlight">Generating Thumbnails</span>
+        <span class="parenthetical">(<%= @unprocessed_games.length %>)</span>
+    </h3>
+    
+    <% if @unprocessed_games.length > 0 %>
+        <%= render :partial => 'unprocessed_row', :collection => @unprocessed_games %>
+        <%= link_to "Reload", upload_publish_path %> <i> (You have to click for updates) </i>
+    <% else %>
+        <i>There are no uploads being processed.</i>
+    <% end %>
+    
+    
+    <hr class="space" />
+    
+    
+    <h3>
+        <span class="highlight">Ready to Publish</span> 
+        <span class="parenthetical">(<%= @unpublished_games.length %>)</span>
+    </h3>
+    
+    
+    
+    <% if @unpublished_games.length > 0 %>   
+        <% form_tag upload_publish_path, :method => "post" do %>
+            <% @unpublished_games.each do | game | %>
+                <% fields_for "games[]", game do |f| %>
+                    <%= render :partial => 'games/reusable_form', :locals => { 
+                        :form => f, :game => game, :col1 => 7, :col2 => 17, :select_id => "games_#{game.to_param}_thumbnail_id" } %>
+                    <div class="span-24" style="border: 0; border-bottom: 1px dotted #555; margin: 20px 0;">&nbsp;</div>
+                <% end %>
+            <% end %>
+            <hr class="space"/>
+            <%= submit_tag "Publish" %>
         <% end %>
-        <tr style="<%= "background-color: #f5f5f5;" if @unprocessed_games.length % 2 == 1 %>"><td>
-            <br/><%= link_to "Reload", upload_publish_path %> <i> (You have to click for updates)
-        </td></tr>
-    </table>
-<% else %>
-    <i>There are no uploads being processed.</i>
-<% end %>
-
-<hr class="space" />
-
-<h3><span class="highlight">Ready to Publish</span> <span class="parenthetical">(<%= @unpublished_games.length %>)</span></h3>
-
-<% if @unpublished_games.length > 0 %>
-    <table style="border: 1px dotted #ededed; padding: 15px;">
-        <% @unpublished_games.each_with_index do | @game, index | %>
-            <tr><td>
-                <%= render :partial => 'publish_form' %>
-            </td></tr>
-        <% end %>
-    </table>
-<% else %>
-    <i>There are no games you can publish.</i>
-<% end %>
-
+    <% else %>
+        <i>There are no games to publish.</i>
+    <% end %>
+    
+    
 </div>
