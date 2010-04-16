@@ -1,12 +1,66 @@
 /* --------------------------------------------------------
-  GENERIC GLOBALS
+  TOP-LEVEL GLOBALS (relating to every page)
 -------------------------------------------------------- */
 
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
+body {
+  background-color: #d4d4d4;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover { 
+  text-decoration: underline;
+}
+
+.container {
+  background-color: #fff;
+}
+
+#header {
+  background-color: #000;
+}
+
+#header_container {
+  width: 100%;
+  background-color: #000;
+  height: 60px;
+}
+
+#header .navigation {
+  float: left;
+  padding-top: 30px; /*<-- for images */
+/*  padding-top: 35px;*/
+}
+
+#header .navigation a {
+  color: white;
+  font-weight: bold;
+  font-size: 8pt;
+}
+
+#header .navigation a.selected {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  -ms-filter: "alpha(opacity=50)";
+  -khtml-opacity: 0.5;
+  -moz-opacity: 0.5;
+}
+
+#flash_message_container {
+  margin: 15px 0;
+}
+
+#footer {
+  background-color: #000;
+  color: white;
+  margin-top: 30px;
+  padding: 15px;
+}
 
 /* --------------------------------------------------------
-  SITE-SPECIFIC GLOBALS
+  OTHER GLOBALS (only applicable to a large subset of pages)
 -------------------------------------------------------- */
 
 form input[type="submit"], form input[type="button"] {
@@ -30,88 +84,6 @@ input[type="text"], form textarea, input[type="password"] {
   width: 100%;
 }
 
-#global-container
-{
-  margin-top: 5px;
-  padding: 10px 0 40px 0;
-}
-
-/* Nav */
-
-#header
-{
-  margin-bottom: 2em;
-  border-top: 1px solid #ccccff;
-  border-bottom: 1px solid #ccccff;
-  padding: 5px 0;
-}
-
-#header .nav-tab
-{
-  text-align: left;
-  margin-top: 0;
-}
-
-#header .nav-tab a
-{
-  color: #555;
-  font-size: 1.3em;
-}
-
-#header .nav-tab a.selected
-{
-  color: black;
-}
-
-
-/* Utils */
-
-#header .util .user
-{
-  font-size: 0.8em;
-}
-
-#header .util .user #user-bar-greeting { margin: 0 0 0 2px; }
-#header .util .user #user-bar-greeting a
-{
-  color: black;
-}
-
-#header .util .user #user-bar-action { margin: -2px 0 0 2px; }
-#header .util .user #user-bar-action a
-{
-  color: #6a6a6a;
-}
-
-
-#header .util .search {}
-
-#header .util .search input.search-input
-{
-  float: left;
-  margin: 0;
-  margin-top: 2px;
-  border: 2px solid #9d9d9d;
-  width: 205px;
-  height: 14px;
-  padding: 3px;
-}
-
-#header .util .search input.search-submit
-{
-  float: left;
-  width: 50px;
-  height: 24px;
-  margin: 2px 0 0 2px;
-  padding: 0;
-  border: 0;
-  background: transparent url('/images/header_search.png') no-repeat center top;
-  text-indent: -1000em;
-  cursor: pointer;
-  cursor: hand; /* for IE 5.x */
-}
-
-
 h2 .title_link
 {
   font-size: 0.5em;
@@ -132,6 +104,38 @@ h3 span.parenthetical
   font-size: 0.6em;
 }
 
+.three_quarters_opacity {
+  opacity: 0.75;
+  filter: alpha(opacity=75);
+  -ms-filter: "alpha(opacity=75)";
+  -khtml-opacity: 0.75;
+  -moz-opacity: 0.75;
+}
 
+.half_opacity {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  -ms-filter: "alpha(opacity=50)";
+  -khtml-opacity: 0.5;
+  -moz-opacity: 0.5;
+}
 
+.overlay_black_label {
+  position: absolute;
+  z-index: 1;
+}
+
+.overlay_black_label .background {
+  background-color: black;
+  width: 100%;
+  /* Set height on element */
+  position: absolute;
+  z-index: 2;
+}
+
+.overlay_black_label .foreground {
+  color: white;
+  position: absolute;
+  z-index: 3;
+}
 

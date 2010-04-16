@@ -3,10 +3,12 @@ ActionController::Routing::Routes.draw do |map|
   # Sessions
   map.resource              :user_session
   
-  # Your Stuff TODO: move to "account" namespace
+  # Your Stuff
+  # TODO: move to "account" namespace
   map.account               "account",                  :controller => "users",   :action => "show"    # This is all stuff unique to "you" the user, eventually we can add account summary type stuff
   map.profile               "account/profile",          :controller => "users",   :action => "show"    # For now this is the same as /account
   map.edit_profile          "account/profile/edit",     :controller => "users",   :action => "edit"    # Edit your account
+  map.friends               "account/friends",          :controller => "friends", :action => "show"
   map.account_settings      "account/settings",         :controller => "users",   :action => "edit"    # Account settings (privacy, email settings)
   map.edit_account_settings "account/settings/edit",    :controller => "users",   :action => "edit"    # Edit account settings
   map.account_games         "account/games",            :controller => "users",   :action => "show"    # "My Games" - list and manage the games you've uploaded
@@ -29,6 +31,7 @@ ActionController::Routing::Routes.draw do |map|
       
   # Other
   map.register              "register",                 :controller => "users",           :action => "new"      # Register -> surferbreak.com/account/new
+  map.register_submit       "register/submit",          :controller => "users",           :action => "create"
   map.login                 "login",                    :controller => "user_sessions",   :action => "new"      # Login    -> surferbreak.com/user_sessions/new
   map.logout                "logout",                   :controller => "user_sessions",   :action => "destroy"  # Sign out -> surferbreak.com/user_sessions/destroy
   

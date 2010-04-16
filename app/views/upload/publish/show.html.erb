@@ -11,7 +11,7 @@
 
 <h2>Publish</h2>
 
-<div class="span-24">
+<div class="span-22 last">
     
     <h3>
         <span class="highlight">Generating Thumbnails</span>
@@ -42,7 +42,7 @@
                 <% fields_for "games[]", game do |f| %>
                     <%= render :partial => 'games/reusable_form', :locals => { 
                         :form => f, :game => game, :col1 => 7, :col2 => 17, :select_id => "games_#{game.to_param}_thumbnail_id" } %>
-                    <div class="span-24" style="border: 0; border-bottom: 1px dotted #555; margin: 20px 0;">&nbsp;</div>
+                    <div class="span-22 last" style="border: 0; border-bottom: 1px dotted #555; margin: 20px 0;">&nbsp;</div>
                 <% end %>
             <% end %>
             <hr class="space"/>

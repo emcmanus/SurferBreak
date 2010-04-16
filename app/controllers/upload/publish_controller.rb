@@ -1,5 +1,7 @@
 class Upload::PublishController < ApplicationController
   
+  before_filter :require_user
+  
   def show
     # Find all unpublished games for this user, display metadata forms for each
     @unpublished_games = Game.find_unpublished_for current_user
@@ -30,19 +32,20 @@ class Upload::PublishController < ApplicationController
       else
         throw "User does not own game."
       end
-    
-      # Check for newly processed games
-      unpublished_games = Game.find_unpublished_for current_user
-      if unpublished_games.try(:length) > 0
-        # Set flash and reload upload_publish
-        flash[:notice] = "#{unpublished_games.count} more games are ready for publishing."
-        redirect_to upload_publish_path and return
-      end
-      
-      # Set flash and redirect to profile
-      flash[:notice] = "Games successfully published."
-      redirect_to profile_path and return
     end
+    
+    # Check for newly processed games
+    unpublished_games = Game.find_unpublished_for current_user
+    if unpublished_games.try(:length) > 0
+      # Set flash and reload upload_publish
+      flash[:notice] = "#{unpublished_games.count} more games are ready for publishing."
+      redirect_to upload_publish_path and return
+    end
+    
+    # Set flash and redirect to profile
+    flash[:notice] = "Games successfully published."
+    redirect_to profile_path and return
+    
     throw "No games submitted."
   end
   

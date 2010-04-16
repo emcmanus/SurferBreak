@@ -5,7 +5,11 @@
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   
-  <title><%= controller.controller_name %>: <%= controller.action_name %></title>
+  <% unless @page_title.blank? %>
+    <title>surferbreak - <%= @page_title %></title>
+  <% else %>
+    <title>surferbreak - <%= controller.controller_name.titleize %></title>
+  <% end %>
   
   <%= javascript_include_tag :defaults %>
   
@@ -23,37 +27,73 @@
 
 <body>
 
-<%= fb_connect_javascript_tag %>
-<%= init_fb_connect "XFBML" %>
-    
-<div class="container" id="global-container">
-   
-  <h1><%= link_to "SurferBreak", root_url, {:style => 'color: black;'} %></h1>
-  
-  <div class="span-24" id="header">
-    <div class="span-20">
-      <div class="span-3 nav-tab"> <%= link_to "Home", root_url %> </div>
-      <div class="span-3 nav-tab" class="nav-tab"> <%= link_to "Directory", list_path %> </div>
-      <% if !current_user %>
-        <div class="span-3 nav-tab" class="nav-tab"> <%= link_to "Register", register_path %> </div>
+<div id="header_container">
+  <div id="header" class="container">
+    <div class="span-8">
+      <%= link_to (image_tag "global/logo-header.png"), root_path %>
+    </div>
+    <div class="navigation">
+      <% if images=true %>
+        <div class="span-2"> <%= link_to (image_tag "global/nav-home-header.png"), root_url %> </div>
+        <div class="span-2" class="tab"> <%= link_to (image_tag "global/nav-explore-header.png"), list_path %> </div>
+        <% if !current_user %>
+          <div class="span-2" class="tab"> <%= link_to (image_tag "global/nav-register-header.png"), register_path %> </div>
+        <% else %>
+          <div class="span-2" class="nav-tab"> <%= link_to (image_tag "global/nav-profile-header.png"), profile_path %> </div>
+        <% end %>
+        <div class="span-2" class="nav-tab"> <%= link_to (image_tag "global/nav-upload-header.png"), upload_path %> </div>
       <% else %>
-        <div class="span-3 nav-tab" class="nav-tab"> <%= link_to "Profile", profile_path %> </div>
+        <div class="span-2"> <%= link_to "HOME", root_url %> </div>
+        <div class="span-2" class="tab"> <%= link_to "EXPLORE", list_path %> </div>
+        <% if !current_user %>
+          <div class="span-2" class="tab"> <%= link_to "REGISTER", register_path %> </div>
+        <% else %>
+          <div class="span-2" class="nav-tab"> <%= link_to "PROFILE", profile_path %> </div>
+        <% end %>
+        <div class="span-2" class="nav-tab"> <%= link_to "UPLOAD", upload_path %> </div>
       <% end %>
-      <div class="span-3 nav-tab" class="nav-tab"> <%= link_to "Upload", upload_path %> </div>
+    </div>
+    
+    <div class="span-7 prepend-1 last">
+      <% if current_user %>
+        <div class="span-2 prepend-3"><%= link_to (image_tag "global/utility-profile-header.png", {:style=>"border-top: 2px solid #a71f1f;"}), profile_path %></div>
+        <div class="span-2 last"><%= link_to (image_tag "global/utility-logout-header.png", {:style=>"border-top: 2px solid #a71f1f;"}), logout_path %></div>
+      <% else %>
+        <div class="span-2 prepend-3"><%= link_to (image_tag "global/utility-register-header.png", {:style=>"border-top: 2px solid #a71f1f;"}), register_path %></div>
+        <div class="span-2 last"><%= link_to (image_tag "global/utility-login-header.png", {:style=>"border-top: 2px solid #a71f1f;"}), login_path %></div>
+      <% end %>
+      <div class="span-7 last" style="padding-top: 9px;">
+        <input type="text" style="display: block; float: left; width: 198px; margin: 0; height: 24px; padding: 0; border: 1px solid #909090; border-right: 0;" />
+        <%= image_tag "global/search-header.png", {:style=>"display: block; float: left;"} %>
+      </div>
     </div>
   
-    <div class="span-4 last" style="padding-top: 3px; text-align: right;">
-      <% if current_user %>
-        <%= link_to current_user.display_name || "your account", account_path %><span style="padding: 0 4px;"> | </span>
-        <%= fb_logout_link "logout", logout_path %>
+  </div>
+</div>
+
+<div class="container">
+  
+  <div class="prepend-1 append-1 span-22 last">
+    
+    <div class="span-22 last">
+      <% if flash[:notice] %>
+        <div id="flash_message_container">
+          <h3><span class="highlight"><%= flash[:notice] %></span></h3>
+        </div>
+      <% else %>
+      &nbsp;
       <% end %>
+    </div>
+    
+    <%= yield  %>
+    
+  </div>
+  
+  <div class="span-24">
+    <div id="footer">
+      Footer
     </div>
   </div>
-
-  <p style="color: green"><%= flash[:notice] %></p>
-  
-  <%= yield  %>
-  
 </div>
  
 </body>

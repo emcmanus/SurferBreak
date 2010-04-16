@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(:version => 20100327135547) do
     t.string   "platform",                    :default => "NES", :null => false
     t.text     "description"
     t.string   "title"
-    t.boolean  "is_adult",                    :default => false, :null => false
     t.string   "storage_object_id",                              :null => false
     t.datetime "created_at"
     t.datetime "updated_at"

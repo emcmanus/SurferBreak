@@ -162,6 +162,8 @@ class Processor
         end
       end
       
+      game.platform = job["screenshots"]["platform"] unless job["screenshots"]["platform"].nil?
+      
       game.file_processed = true
       game.save
       

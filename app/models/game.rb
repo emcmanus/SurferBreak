@@ -90,7 +90,7 @@ class Game < ActiveRecord::Base
   
   
   def s3_path
-    self.class.s3_path + self[:storage_object_id]
+    self.class.s3_path + "/" + self[:storage_object_id]
   end
   
   

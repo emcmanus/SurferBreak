@@ -1,9 +1,9 @@
 class UserSessionsController < ApplicationController
-  # before_filter :require_no_user, :only => [:new, :create]
-  # before_filter :require_user, :only => :destroy
+  before_filter :require_no_user, :only => [:new, :create]
+  before_filter :require_user, :only => :destroy
   
   def new
-    # @user_session = UserSession.new
+    @user_session = UserSession.new
   end
   
   def show
@@ -11,27 +11,18 @@ class UserSessionsController < ApplicationController
   end
   
   def create
-    @user_session = UserSession.new
+    @user_session = UserSession.new(params[:user_session])
     if @user_session.save
       flash[:notice] = "You're connected!"
       redirect_back_or_default root_path
     else
-      redirect_back_or_default root_path
+      render :action => :new
     end
-    
-    # Verify connect signature
-    
-    # Try to find user given the facebook UID
-    
-    # If no session, show error message, redirect to "new" action
-    
-    # If successful, redirect back to home
-    
   end
 
   def destroy
     current_user_session.destroy
-    flash[:notice] = "Logout successful!"
-    redirect_back_or_default login_path
+    flash[:notice] = "Logout successful."
+    redirect_back_or_default root_path
   end
 end

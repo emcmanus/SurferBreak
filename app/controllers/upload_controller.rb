@@ -1,6 +1,6 @@
 class UploadController < ApplicationController
   
-  # before_filter :require_user, :only => [:show]
+  before_filter :require_user, :only => [:show]
   
   
   # Flow for two files:

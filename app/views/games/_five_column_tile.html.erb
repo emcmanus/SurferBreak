@@ -1,0 +1,29 @@
+<div class="span-5 <%= "last" if last %>" style="height: 166px;">
+    <div style="position: absolute; z-index: 0;" class="transparent-black-bg">
+        <% if game.thumbnail %>
+            <%= image_tag game.thumbnail.s3_path, :width => 190, :height => 166 %>
+        <% else %>
+            <%= image_tag "thumbnails/snes_generic.png", :width => 190, :height => 166 %>
+        <% end %>
+    </div>
+    
+    <div class="overlay_black_label span-5 last">
+        <div class="background three_quarters_opacity" style="height: 3.2em;">&nbsp;</div>
+        <div class="foreground">
+            <div style="padding: 3px 5px;">
+                <span style="font-weight: bold;"><%= link_to( truncate( game.title || game.original_filename, 100 ), game, {:style=>"color: white;"} ) %></span><br/>
+                <span style="color: #7f7f7f; font-size: 75%;">(<%= link_to game.platform, game, { :style => "color: #7f7f7f;" } %>)</span>
+            </div>
+        </div>
+    </div>
+    
+    <%= link_to (image_tag "buttons/go_play_overlay.png"), game, { :style => "position: relative; top: 133px; left: 118px;" } %>
+</div>
+
+
+<% if last %>
+    <hr class="space" />
+<% end %>
+
+
+

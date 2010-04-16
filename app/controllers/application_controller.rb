@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   
   # Require facebook connect for ALL pages
-  before_filter :require_connected_user
+  # before_filter :require_connected_user
   
   helper_method :current_user_session, :current_user
   
@@ -14,39 +14,44 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password, :password_confirmation
   filter_parameter_logging :fb_sig_friends
   
+  # FB Connect
+  # before_filter :set_facebook_session
+  # helper_method :facebook_session
+  
   private
-    # Memcache
-    def get_cached(key, expires=1.hour)
-      unless output = CACHE.get(key)
-        output = yield
-        CACHE.set(key, output, expires)
-      end
-      return output
-    end
-    
-    # Require Facebook Connect
-    def require_connected_user
-      unless current_user or self.controller_name == "user_sessions"
-        store_location
-        flash[:notice] = "Please sign in first!"
-        redirect_to login_path
-      end
-    end
     
     def current_user_session
       return @current_user_session if defined?(@current_user_session)
       @current_user_session = UserSession.find
     end
-    
+
     def current_user
       return @current_user if defined?(@current_user)
-      @current_user = current_user_session && current_user_session.user
+      @current_user = current_user_session && current_user_session.record
     end
-    
+
+    def require_user
+      unless current_user
+        store_location
+        flash[:notice] = "You must log in to access this page."
+        redirect_to new_user_session_url
+        return false
+      end
+    end
+
+    def require_no_user
+      if current_user
+        store_location
+        flash[:notice] = "You must be logged out to access this page."
+        redirect_to account_url
+        return false
+      end
+    end
+
     def store_location
       session[:return_to] = request.request_uri
     end
-    
+
     def redirect_back_or_default(default)
       redirect_to(session[:return_to] || default)
       session[:return_to] = nil

@@ -1,5 +1,7 @@
 class GamesController < ApplicationController
   
+  before_filter :require_user, :only => [:new, :edit, :create, :update, :destroy]
+  
   # GET /games
   def index
     @games = Game.all

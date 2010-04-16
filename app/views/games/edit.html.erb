@@ -48,7 +48,11 @@
     
     <div class="span-7">
         <%= f.label "Default Thumbnail:" %><br/>
-        <%= image_tag @game.thumbnail.s3_path %>
+        <% if @game.thumbnail %>
+            <%= image_tag @game.thumbnail.s3_path %>
+        <% else %>
+            <%= image_tag "/images/thumbnails/#{@game.platform}_generic.png" %>
+        <% end %>
     </div>
     
     <div class="span-8 last">
